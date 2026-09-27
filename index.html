@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Данные для руководителя проекта</title>
+<style>
+:root{
+ --ink:#191c22; --mut:#5b6270; --faint:#98a0ae; --line:#e7e9f0; --soft:#f5f6fa;
+ --blue:#2f6bd8; --blueBg:#eaf2fe; --amber:#e8930c; --amberBg:#fdf3e0;
+ --purple:#8a5cc7; --purpleBg:#f3ecfd; --teal:#0e9bb5; --tealBg:#e4f6fa;
+ --green:#1e9e5a; --greenBg:#e8f6ee; --red:#d64541; --redBg:#fdecea;
+ --pink:#d64f8e; --pinkBg:#fceaf3; --orange:#e0673a; --orangeBg:#fdeee7;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--ink);background:#fbfbfe;line-height:1.55;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.fadein{animation:fadeIn .38s cubic-bezier(.2,.7,.3,1);}
+@keyframes popIn{0%{transform:scale(.85);opacity:0;}60%{transform:scale(1.05);opacity:1;}100%{transform:scale(1);}}
+.pop{animation:popIn .35s ease;}
+@keyframes confettiFall{to{transform:translateY(105vh) rotate(360deg);opacity:.15;}}
+.confetti-piece{position:fixed;top:-24px;border-radius:2px;pointer-events:none;z-index:9999;animation:confettiFall linear forwards;}
+.xp-pill{display:inline-flex;align-items:center;gap:7px;background:linear-gradient(90deg,#fdf3e0,#fceaf3);border:1px solid #f0d9ab;border-radius:999px;padding:6px 14px;font-size:13.5px;font-weight:750;color:#a8660a;white-space:nowrap;}
+.badge-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.badge{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;background:var(--soft);border:1.5px solid var(--line);opacity:.32;filter:grayscale(1);transition:all .2s;}
+.badge.on{opacity:1;filter:none;box-shadow:0 2px 10px rgba(30,40,80,.16);border-color:transparent;}
+.streak-note{font-size:12.5px;color:var(--faint);margin-top:10px;line-height:1.5;}
+/* ---- home hub ---- */
+.hero{border-radius:22px;padding:36px 40px;background:linear-gradient(120deg,#eaf2fe 0%,#f3ecfd 55%,#fceaf3 100%);border:1px solid var(--line);position:relative;overflow:hidden;}
+.hero-kicker{font-size:13px;font-weight:750;letter-spacing:.07em;text-transform:uppercase;color:var(--purple);}
+.hero h1{margin:10px 0 0;}
+.hero p.lead{font-size:17px;color:var(--mut);max-width:680px;margin:14px 0 0;}
+.hero-stats{display:flex;gap:28px;margin-top:24px;flex-wrap:wrap;}
+.hero-stat b{display:block;font-size:26px;font-weight:800;}
+.hero-stat span{font-size:13px;color:var(--mut);}
+.hero-cta{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
+.role-mini{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:34px;}
+.rm-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px;}
+.rm-card .rm-ico{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px;}
+.rm-card b{font-size:15.5px;}
+.rm-card p{font-size:14px;color:var(--mut);margin:6px 0 0;}
+.mod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:18px;}
+.mod-card{text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:16px;padding:18px 20px;cursor:pointer;transition:transform .15s,box-shadow .15s;font:inherit;color:var(--ink);display:block;width:100%;}
+.mod-card:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(30,40,80,.1);}
+.mod-card .mc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.mod-card .mc-num{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex:0 0 30px;}
+.mod-card .mc-state{font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap;}
+.mod-card .mc-title{font-size:16px;font-weight:750;margin-top:12px;}
+.mod-card .mc-sub{font-size:13.5px;color:var(--faint);margin-top:6px;}
+.mod-card .mc-bar{height:5px;border-radius:3px;background:var(--soft);margin-top:14px;overflow:hidden;}
+.mod-card .mc-bar i{display:block;height:100%;border-radius:3px;}
+/* ---- practice checkbox ---- */
+.practice-done{display:flex;align-items:center;gap:10px;margin-top:12px;padding-top:12px;border-top:1px dashed #f0d9ab;font-size:14.5px;font-weight:650;color:var(--amber);cursor:pointer;}
+.practice-done input{width:18px;height:18px;accent-color:var(--green);cursor:pointer;}
+.practice-done.done{color:var(--green);}
+/* ---- summary tldr ---- */
+.tldr{margin-top:18px;background:var(--soft);border-radius:14px;padding:16px 20px;font-size:15px;color:var(--mut);display:flex;gap:12px;}
+.tldr .ti{font-size:18px;flex:0 0 auto;}
+/* ---- certificate ---- */
+.cert-wrap{max-width:900px;}
+.cert{margin-top:22px;border-radius:22px;padding:52px 48px;background:radial-gradient(circle at 15% 15%,#f3ecfd,#eaf2fe 45%,#fceaf3 100%);border:2px solid #d9c9f2;text-align:center;position:relative;}
+.cert::before{content:"";position:absolute;inset:14px;border:1.5px dashed #c9b4ea;border-radius:14px;pointer-events:none;}
+.cert-kicker{font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:750;color:var(--purple);}
+.cert-name{font-size:clamp(26px,4vw,40px);font-weight:800;margin:16px 0;color:var(--ink);border-bottom:2px solid var(--purple);display:inline-block;padding-bottom:8px;min-width:280px;}
+.cert-sub{font-size:16px;color:var(--mut);max-width:560px;margin:0 auto;}
+.cert-foot{margin-top:26px;font-size:13.5px;color:var(--faint);}
+.cert-input{border:1.5px solid var(--line);border-radius:11px;padding:12px 16px;font-size:16px;width:320px;max-width:100%;}
+@media print{.side,.pager,.cert-formrow,.crumb,.cert-intro{display:none!important;} .main{padding:0!important;} body{background:#fff;}}
+@media(max-width:980px){
+ .role-mini{grid-template-columns:1fr;}
+ .hero{padding:26px 22px;}
+}
+.app{display:flex;min-height:100vh;}
+.side{width:320px;flex:0 0 320px;background:#fff;border-right:1px solid var(--line);padding:26px 18px;position:sticky;top:0;height:100vh;overflow:auto;}
+.brand{font-size:17px;font-weight:700;line-height:1.3;}
+.brand-sub{font-size:13px;color:var(--mut);margin-top:6px;}
+.prog-wrap{margin:18px 0 8px;}
+.prog-bar{height:8px;background:var(--soft);border-radius:4px;overflow:hidden;}
+.prog-fill{height:100%;width:0%;border-radius:4px;background:linear-gradient(90deg,var(--blue),var(--purple));transition:width .4s ease;}
+.prog-label{font-size:13px;color:var(--mut);margin-top:8px;}
+.nav{margin-top:12px;display:flex;flex-direction:column;gap:4px;}
+.nav button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:10px;font-size:15px;color:var(--mut);cursor:pointer;}
+.nav button:hover{background:var(--soft);}
+.nav button.on{background:var(--soft);color:var(--ink);font-weight:600;}
+.nav .mdot{width:9px;height:9px;border-radius:50%;flex:0 0 9px;}
+.nav .tick{margin-left:auto;font-size:13px;font-weight:700;color:var(--green);}
+.nav .sep{font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em;padding:14px 12px 6px;font-weight:600;}
+.side-foot{margin-top:20px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;color:var(--faint);line-height:1.5;}
+.side-foot a{color:var(--mut);cursor:pointer;text-decoration:underline;}
+.main{flex:1;padding:38px 48px 90px;max-width:1560px;width:100%;}
+.crumb{font-size:14px;color:var(--faint);font-weight:500;}
+h1{font-size:clamp(30px,2.4vw,44px);font-weight:750;margin:8px 0 0;line-height:1.15;letter-spacing:-.01em;}
+.goal{margin-top:16px;padding:16px 20px;border-radius:14px;font-size:16.5px;border-left:5px solid var(--acc,#2f6bd8);background:#fff;border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line);}
+.goal b{font-weight:700;}
+h2.sec{font-size:19px;font-weight:700;margin:34px 0 6px;}
+.topic{padding:20px 0 22px;border-bottom:1px solid var(--line);max-width:1080px;}
+.topic h3{font-size:20px;font-weight:700;margin:0;display:flex;align-items:center;gap:10px;}
+.topic h3 .tnum{flex:0 0 28px;height:28px;border-radius:8px;background:var(--accBg,#eaf2fe);color:var(--acc,#2f6bd8);display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;}
+.topic p{font-size:16.5px;color:var(--mut);margin:10px 0 0;}
+.practice{margin-top:30px;border-radius:16px;padding:20px 24px;background:var(--amberBg);border:1.5px dashed #f0d9ab;}
+.practice .pl{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--amber);}
+.practice p{font-size:16.5px;margin:8px 0 0;}
+/* ---- quiz ---- */
+.quiz{margin-top:34px;}
+.q-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.q-dots{display:flex;gap:6px;}
+.q-dot{width:12px;height:12px;border-radius:50%;background:#dfe3ec;border:2px solid #dfe3ec;}
+.q-dot.cur{border-color:var(--acc,#2f6bd8);background:#fff;}
+.q-dot.ok{background:var(--green);border-color:var(--green);}
+.q-dot.bad{background:var(--red);border-color:var(--red);}
+.q-actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;}
+.mini-btn{border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 13px;font-size:13.5px;font-weight:600;color:var(--mut);cursor:pointer;}
+.mini-btn:hover:not(:disabled){background:var(--soft);color:var(--ink);}
+.mini-btn:disabled{opacity:.45;cursor:default;}
+.q{border:1px solid var(--line);border-radius:16px;padding:20px 24px;margin-top:14px;background:#fff;}
+.q-text{font-size:17px;font-weight:650;margin:0;}
+.opts{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
+.opt{border:1.5px solid var(--line);background:#fff;border-radius:11px;padding:12px 16px;font-size:16px;text-align:left;cursor:pointer;color:var(--ink);transition:border-color .15s,background .15s;}
+.opt:hover:not(:disabled){border-color:var(--acc,#2f6bd8);background:var(--accBg,#eaf2fe);}
+.opt:disabled{cursor:default;}
+.opt.ok{border-color:var(--green);background:var(--greenBg);}
+.opt.bad{border-color:var(--red);background:var(--redBg);}
+.q-exp{font-size:15.5px;color:var(--mut);margin:14px 0 0;padding-top:14px;border-top:1px solid var(--line);}
+.q-exp b{color:var(--ink);}
+.review{margin-top:14px;border:1px solid var(--line);border-radius:16px;background:#fff;display:none;}
+.review.open{display:block;}
+.review .rv-head{padding:16px 24px;border-bottom:1px solid var(--line);font-size:16px;font-weight:700;}
+.rv-item{padding:14px 24px;border-bottom:1px solid var(--line);font-size:15px;}
+.rv-item:last-child{border-bottom:0;}
+.rv-st{font-weight:700;margin-right:8px;}
+.rv-st.ok{color:var(--green);} .rv-st.bad{color:var(--red);}
+.rv-q{font-weight:650;color:var(--ink);}
+.rv-a{color:var(--mut);margin-top:4px;}
+.rv-a .va{color:var(--green);font-weight:600;} .rv-a .ya{color:var(--red);font-weight:600;}
+.rv-e{color:var(--mut);margin-top:6px;padding:10px 14px;background:var(--soft);border-radius:10px;font-size:14.5px;}
+.banner{display:none;margin-top:22px;padding:18px 24px;border-radius:14px;background:var(--greenBg);border:1.5px solid #bfe6cf;font-size:16.5px;font-weight:650;color:#14663a;align-items:center;gap:12px;}
+.banner.show{display:flex;}
+.banner .bcheck{width:30px;height:30px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;flex:0 0 30px;}
+/* ---- bottom nav ---- */
+.pager{display:flex;justify-content:space-between;gap:14px;margin-top:44px;flex-wrap:wrap;}
+.pg-btn{border:0;border-radius:12px;padding:14px 26px;font-size:16px;font-weight:650;cursor:pointer;background:var(--ink);color:#fff;}
+.pg-btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line);}
+.pg-btn:disabled{background:#e3e6ee;color:var(--faint);cursor:not-allowed;}
+.pg-lock{width:100%;font-size:14px;color:var(--faint);margin-top:10px;display:flex;align-items:center;gap:8px;}
+.pg-lock.open{color:var(--green);font-weight:600;}
+/* ---- viz ---- */
+.viz-card{margin-top:26px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px 28px;box-shadow:0 3px 16px rgba(30,40,80,.05);}
+.viz-title{font-size:16.5px;font-weight:750;display:flex;align-items:center;gap:10px;}
+.viz-title .vt-ico{width:34px;height:34px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex:0 0 34px;}
+.viz-sub{font-size:14px;color:var(--faint);margin:6px 0 0 44px;}
+.viz-body{margin-top:18px;}
+.viz-panel{background:var(--soft);border-radius:14px;padding:16px 20px;font-size:15.5px;color:var(--mut);min-height:96px;}
+.viz-panel b{color:var(--ink);}
+.role-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.role-card{border:2px solid var(--line);border-radius:14px;padding:16px 18px;cursor:pointer;background:#fff;transition:border-color .15s,transform .15s;}
+.role-card:hover{transform:translateY(-2px);}
+.role-card.sel{border-color:var(--rc);background:var(--rcBg);}
+.role-card .rc-name{font-size:16px;font-weight:700;color:var(--rc);}
+.role-card .rc-q{font-size:13.5px;color:var(--mut);margin-top:6px;font-style:italic;}
+.chip-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+.fchip{border:2px solid var(--fc,#2f6bd8);background:#fff;color:var(--fc,#2f6bd8);border-radius:999px;padding:9px 20px;font-size:15.5px;font-weight:700;cursor:pointer;}
+.fchip.sel{background:var(--fc);color:#fff;}
+.farrow{font-size:20px;color:var(--faint);font-weight:700;}
+.layer-stack{display:flex;flex-direction:column;gap:0;align-items:center;}
+.layer{border-radius:12px;padding:14px 20px;text-align:center;cursor:pointer;border:2px solid transparent;transition:transform .15s;}
+.layer:hover{transform:scale(1.02);}
+.layer .ln{font-weight:750;font-size:15.5px;}
+.layer .ls{font-size:13px;opacity:.85;}
+.layer-arrow{color:var(--faint);font-size:16px;line-height:1.2;}
+.qgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.qchip{border:2px solid var(--qc);background:var(--qcBg);border-radius:12px;padding:12px 14px;cursor:pointer;text-align:center;}
+.qchip .qn{font-weight:700;color:var(--qc);font-size:15px;}
+.qchip.sel{box-shadow:0 0 0 2px var(--qc) inset;}
+.pipe{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+.pnode{border:2px solid var(--line);border-radius:12px;padding:12px 16px;background:#fff;text-align:center;cursor:pointer;min-width:120px;transition:all .2s;}
+.pnode .pn{font-weight:700;font-size:14.5px;}
+.pnode .ps{font-size:12px;color:var(--mut);margin-top:2px;}
+.pnode.hot{border-color:var(--nc);background:var(--ncBg);transform:scale(1.05);box-shadow:0 4px 14px rgba(30,40,80,.12);}
+.parrow{align-self:center;color:var(--faint);font-size:18px;padding:0 8px;font-weight:700;}
+.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:11px;overflow:hidden;}
+.seg button{border:0;background:#fff;padding:9px 18px;font-size:14.5px;font-weight:600;color:var(--mut);cursor:pointer;}
+.seg button.on{background:var(--ink);color:#fff;}
+.tok{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:16.5px;padding:3px 8px;border-radius:7px;cursor:pointer;border:1.5px solid transparent;line-height:2;}
+.tok:hover{border-color:currentColor;}
+.mini-table{border-collapse:collapse;font-size:14.5px;margin-top:10px;}
+.mini-table th,.mini-table td{border:1px solid var(--line);padding:7px 16px;text-align:left;}
+.mini-table th{background:var(--soft);font-weight:650;}
+.bars{display:flex;align-items:flex-end;gap:10px;height:220px;padding:10px 6px 0;border-bottom:2px solid var(--line);}
+.bcol{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;}
+.bval{font-size:13px;font-weight:700;margin-bottom:4px;}
+.bbar{width:46px;border-radius:6px 6px 0 0;}
+.blab{font-size:13px;color:var(--mut);margin-top:6px;}
+.mline{position:relative;border-top:2.5px dashed;}
+.abwrap{display:flex;align-items:flex-end;gap:60px;height:240px;padding:0 20px;border-bottom:2px solid var(--line);}
+.vert{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;}
+.whisk{width:2px;background:var(--ink);position:relative;}
+.whisk::before,.whisk::after{content:"";position:absolute;left:-8px;width:18px;height:2px;background:var(--ink);}
+.whisk::before{top:0;} .whisk::after{bottom:0;}
+input[type=range]{width:100%;accent-color:var(--purple);}
+:focus-visible{outline:2.5px solid var(--purple);outline-offset:2px;border-radius:6px;}
+.main:focus{outline:none;}
+.skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:#fff;padding:8px 14px;border-radius:8px;z-index:10000;}
+.skip:focus{left:8px;}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:14px;color:var(--mut);}
+.legend .li{display:flex;align-items:center;gap:6px;cursor:pointer;}
+.legend .sw{width:14px;height:4px;border-radius:2px;}
+.mat2x2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.quad{border:2px solid var(--qc);background:var(--qcBg);border-radius:14px;padding:16px 18px;cursor:pointer;min-height:110px;}
+.quad.sel{box-shadow:0 0 0 2px var(--qc) inset;}
+.quad .qn{font-weight:750;font-size:15.5px;color:var(--qc);}
+.quad .qd{font-size:13.5px;color:var(--mut);margin-top:6px;}
+.bricks{display:flex;gap:8px;flex-wrap:wrap;min-height:56px;align-items:flex-end;}
+.brick{width:52px;height:34px;border-radius:7px;background:var(--orange);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;transform:rotate(var(--rot,0deg));}
+.meter{height:16px;background:var(--soft);border-radius:8px;overflow:hidden;margin-top:14px;}
+.meter-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,var(--green),var(--amber),var(--red));width:0%;transition:width .3s;}
+.vbtn{border:0;border-radius:10px;padding:11px 20px;font-size:15px;font-weight:700;cursor:pointer;background:var(--ink);color:#fff;}
+.vbtn.alt{background:#fff;color:var(--ink);border:1.5px solid var(--line);}
+.g-search{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:13px 18px;font-size:16px;margin-top:18px;background:#fff;color:var(--ink);}
+.g-search::placeholder{color:var(--faint);}
+.g-wrap{overflow-x:auto;margin-top:16px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:8px 22px 14px;}
+table{width:100%;border-collapse:collapse;min-width:680px;}
+th{font-size:13px;font-weight:650;color:var(--faint);text-align:left;padding:14px 14px 10px 0;border-bottom:1.5px solid var(--line);white-space:nowrap;}
+td{font-size:15.5px;color:var(--mut);padding:12px 14px 12px 0;border-bottom:1px solid var(--line);vertical-align:top;}
+td.term{color:var(--ink);font-weight:700;white-space:nowrap;}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:1px;}
+.ck-item{display:flex;gap:14px;align-items:flex-start;padding:16px 6px;border-bottom:1px solid var(--line);cursor:pointer;background:#fff;}
+.ck-item input{margin-top:4px;accent-color:var(--green);width:20px;height:20px;flex:0 0 20px;cursor:pointer;}
+.ck-item span{font-size:17px;}
+.ck-item input:checked + span{color:var(--faint);text-decoration:line-through;}
+.ck-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:8px 26px 18px;margin-top:18px;}
+.ck-top{display:flex;justify-content:space-between;align-items:center;padding:18px 0 4px;font-weight:700;font-size:16px;}
+.empty{font-size:15.5px;color:var(--faint);padding:20px 0;}
+@media(max-width:980px){
+ .app{flex-direction:column;}
+ .side{width:100%;flex:none;height:auto;position:static;border-right:0;border-bottom:1px solid var(--line);}
+ .nav{flex-direction:row;overflow-x:auto;}
+ .nav .sep{display:none;}
+ .nav button{white-space:nowrap;flex:0 0 auto;}
+ .main{padding:22px 18px 60px;}
+ .role-grid,.qgrid{grid-template-columns:1fr;}
+ .mat2x2{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">К содержимому</a>
+<div class="app">
+  <aside class="side">
+    <div class="brand">Данные для РП</div>
+    <div class="brand-sub" id="brandSub">Курс для руководителей проектов · 7 модулей</div>
+    <div class="prog-wrap">
+      <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+      <div class="prog-label" id="progLabel">Пройдено 0 из 7 модулей</div>
+    </div>
+    <div id="xpPill"></div>
+    <div class="badge-row" id="badgeRow"></div>
+    <nav class="nav" id="nav" aria-label="Разделы курса"></nav>
+    <div class="side-foot">Прогресс сохраняется в этом браузере.<br><a id="resetLink" href="#" role="button">Сбросить прогресс</a><br></div>
+      <div class="side-foot">Курс не собирает и не передает никаких данных: весь прогресс остается в вашем браузере. Полный курс можно пройти на <a href="https://courserp.ru" target="_blank" rel="noopener noreferrer">courserp.ru</a>.</div>
+  </aside>
+  <main class="main" id="main" tabindex="-1"></main>
+</div>
+<script>
+var PAL={blue:'#2f6bd8',blueBg:'#eaf2fe',amber:'#e8930c',amberBg:'#fdf3e0',purple:'#8a5cc7',purpleBg:'#f3ecfd',teal:'#0e9bb5',tealBg:'#e4f6fa',green:'#1e9e5a',greenBg:'#e8f6ee',red:'#d64541',redBg:'#fdecea',pink:'#d64f8e',pinkBg:'#fceaf3',orange:'#e0673a',orangeBg:'#fdeee7',ink:'#191c22',mut:'#5b6270',line:'#e7e9f0',faint:'#98a0ae',soft:'#f5f6fa'};
+var HUES=['#2f6bd8','#e8930c','#0e9bb5','#8a5cc7','#d64f8e','#1e9e5a','#e0673a'];
+var HUESBG=['#eaf2fe','#fdf3e0','#e4f6fa','#f3ecfd','#fceaf3','#e8f6ee','#fdeee7'];
+var MICO=['🗺️','🧱','🚦','🔤','📊','📈','🤝'];
+
+var MODULES=[
+ {num:1,short:'Карта мира данных',title:'Карта мира данных: кто есть кто в команде',dur:'90 мин',
+  goal:'Понять, кто есть кто в команде данных, и научиться формулировать задачи через управленческий вопрос, а не через "выгрузку".',
+  topics:[
+   {t:'Три роли в команде данных',d:'Команда данных это разные профессии с разными инструментами и вопросами. <br>Руководитель проекта не должен уметь делать их работу, но обязан понимать, к кому идти с какой задачей, иначе задача будет бесконечно переадресовываться.'},
+   {t:'Место руководителя проектов в цепочке',d:'Руководитель проекта это заказчик и переводчик, превращающий управленческую цель в аналитический вопрос, принимает решение по результату и защищает время команды на качество данных. <br>Если РП просит "выгрузку ради выгрузки", команда тратит часы на данные, которые никуда не приведут.'},
+   {t:'Формула постановки задачи',d:'Хорошая задача аналитику пишется по формуле из четырех шагов. <br>Ниже интерактив: нажимайте на шаги и смотрите, как "выгрузите заявления" превращается в задачу, которую не придется переделывать три раза.'}
+  ],
+  practice:'Возьмите одну реальную задачу на ближайшую неделю (например, разобраться, почему в одном районе дольше согласовывают заявления). <br>Перепишите ее в формате "контекст → вопрос → решение → формат результата". Покажите аналитику и спросите: "Чего я не учел?"',
+  quiz:[
+   {q:'Кому в команде данных поставить задачу "настроить ежедневную автоматическую выгрузку заявлений из информационной системы в хранилище"?',
+    o:['Аналитику данных','Дата-инженеру','Владельцу данных','Руководителю проекта самому, в Excel'],a:1,
+    e:'Автоматизация потоков данных это зона ответственности дата-инженера. Аналитик работает поверх готовых данных, а владелец данных несет ответственность за их качество и смысл.'},
+   {q:'С чего начинается хорошая постановка задачи аналитику?',
+    o:['С перечня нужных колонок','С управленческого вопроса и решения, которое примем','С готового SQL-запроса','С требования "сделать к утру"'],a:1,
+    e:'Формула: контекст → вопрос → решение → формат результата. Набор колонок это следствие вопроса, а не его начало.'},
+   {q:'Какой вопрос это основная зона ответственности аналитика данных?',
+    o:['"Как спроектировать хранилище?"','"Что происходит и почему?"','"Полные ли данные и что на самом деле означает статус заявления?"','"Как настроить доступы к данным?"'],a:1,
+    e:'Аналитик отвечает на вопросы "что происходит и почему". За хранилище и техническую настройку доступов — инженеры, за полноту и смысл данных и согласование доступов — владелец данных.'}
+  ]},
+ {num:2,short:'Как устроены данные',title:'Как устроены данные',dur:'90 мин',
+  goal:'Уметь разбираться в структуре данных: строки, столбцы, типы, ключи, слои сырых и обработанных данных. Понимать, что такое качество данных.',
+  topics:[
+   {t:'Строки, столбцы, типы данных',d:'Каждая строка это объект: заявление, факт оплаты, здание, а каждый столбец это его свойство. <br>Тип данных (число, текст, дата) определяет, что можно делать с данными: "двенадцать штук" как цифру не посчитаешь. <br>Ключ это поле, которое однозначно определяет строку, например номер заявления или ID объекта.'},
+   {t:'Сырые и обработанные данные',d:'Данные проходят через слои, как по конвейеру: как пришли из информационной системы → почищенные → готовые к отчетам. <br>Главное правило инженеров: исходную выгрузку не трогаем никогда.'},
+   {t:'Качество данных',d:'Пропуски, дубликаты и выбросы — три врага любой цифры. <br>У дата-инженеров есть четыре постоянные проверки качества. Нажимайте на карточки, чтобы увидеть описание проверок.'}
+  ],
+  practice:'Составьте чек-лист качества для данных вашего проекта (например, реестра заявлений): полнота, уникальность, актуальность, консистентность. <br>Отметьте, какие проверки сегодня делаются "на глаз", а какие не делает никто.',
+  quiz:[
+   {q:'Главное правило работы с сырыми данными:',
+    o:['Сразу чистить, чтобы не мусорить','Не править исходник: чистим копию на следующем слое','Хранить только обработанные данные','Сырые можно удалять после отчета'],a:1,
+    e:'Слои bronze → silver → gold. Исходную выгрузку трогать нельзя, потому что это страховка и возможность все пересчитать заново.'},
+   {q:'Пропуски в данных у аналитика и у инженера называются соответственно:',
+    o:['NaN и NULL','Пусто и ноль','Дырка и gap','Missing и empty'],a:0,
+    e:'У аналитика в таблице это NaN (missing values), в базе данных — NULL.'},
+   {q:'Что в первую очередь искажают дубликаты строк в выгрузке заявлений?',
+    o:['Цвета ячеек','Названия колонок','Любые суммы и количества','Порядок строк'],a:2,
+    e:'Одно заявление посчитается дважды: число поданных заявлений, доля одобренных, все будет завышено.'}
+  ]},
+ {num:3,short:'Путь данных',title:'Путь данных: от информационной системы до дашборда руководителю',dur:'90 мин',
+  goal:'Видеть цепочку "источник → пайплайн → хранилище → витрина → дашборд" и понимать, почему "просто взять данные" может занять дни.',
+  topics:[
+   {t:'Источники данных',d:'Файлы и выгрузки (Excel, CSV,...), API (запросы к различным информационным системам), базы данных (реестр заявлений, реестр объектов), события (действия заявителей на портале). <br>У каждого источника свой формат, свое расписание обновления и свои проблемы с качеством.'},
+   {t:'Пайплайн и ETL',d:'Данные не телепортируются в дашборд, а идут по конвейеру: забрали → почистили → положили в хранилище. <br>Запустите конвейер на схеме и посмотрите, что происходит на каждом шаге.'},
+   {t:'Хранилище, озеро, витрина',d:'Это три разных "дома" для данных. Дашборды стоят на витринах, а не на сырых данных и это важно, когда что-то ломается. <br>Нажимайте на карточки.'}
+  ],
+  practice:'Нарисуйте на листе бумаги схему: источники → пайплайн → хранилище → витрина → дашборд — для вашего проекта. <br>Подпишите, кто отвечает за каждый участок. Покажите инженеру и попросите поправить.',
+  quiz:[
+   {q:'Классический порядок этапов ETL:',
+    o:['Load → Transform → Extract','Extract → Transform → Load','Transform → Extract → Load','Load → Extract → Transform'],a:1,
+    e:'Extract (забрали) → Transform (почистили) → Load (положили в хранилище). В варианте ELT порядок меняется, но три этапа остаются.'},
+   {q:'Витрина данных — это:',
+    o:['Сырые логи событий портала','Готовые к отчетам обработанные наборы','Программа для построения графиков','Архив сырых логов портала'],a:1,
+    e:'Витрина (mart, gold-слой) это агрегированные наборы, приготовленные под конкретные отчеты и дашборды.'},
+   {q:'Цифры в дашборде по срокам согласования вчера не обновились. Кого спрашивать в первую очередь?',
+    o:['Дата-инженера','Дизайнера','Руководителя комиссии','Аналитика, который рисовал дашборд'],a:0,
+    e:'Сначала проверяется пайплайн: загрузка, расписание, логи. К аналитику, если данные в витрине корректны, а проблема в расчетах дашборда.'}
+  ]},
+ {num:4,short:'SQL без кода',title:'SQL это язык данных',dur:'90 мин',
+  goal:'Уметь прочитать простой SQL-запрос словами и понимать возможности и ограничения работы аналитика с данными.',
+  topics:[
+   {t:'Запрос как рецепт',d:'SQL читается почти как русское предложение. <br>Посмотрим на настоящий запрос про заявления, разбитый на цветные куски.'},
+   {t:'JOIN это склейка таблиц',d:'Аналог ВПР, но мощнее: объединяет строки двух таблиц по общему ключу, например номер заявления или id заявителя. <br>LEFT JOIN сохраняет все строки левой таблицы даже без пары справа и это важно, чтобы не потерять данные.'},
+   {t:'Почему "просто выгрузить" это не быстро',d:'За словом "выгрузка" стоит несколько трудоемких шагов. <br>Схема ниже показывает типичный реальный состав работы.'}
+  ],
+  practice:'Попросите аналитика показать один простой запрос из вашего проекта (например, про заявления). Прочитайте его вслух словами "взять … из … где …" и убедитесь, что понимаете каждую строку.',
+  quiz:[
+   {q:'Что делает WHERE в запросе SELECT … WHERE status = \'одобрено\'?',
+    o:['Сортирует строки','Фильтрует строки по условию','Склеивает две таблицы','Считает сумму'],a:1,
+    e:'WHERE — это фильтр, теперь в результат попадут только строки, удовлетворяющие условию.'},
+   {q:'GROUP BY — ближайший аналог в Excel:',
+    o:['ВПР','Автофильтр','Сводная таблица','Условное форматирование'],a:2,
+    e:'GROUP BY сворачивает строки в группы и считает агрегаты это то, что делает сводная таблица.'},
+   {q:'JOIN объединяет таблицы по:',
+    o:['Цвету ячеек','Общему ключу, например номеру заявления','Порядку строк','Названию файла'],a:1,
+    e:'Джойн работает через общий ключ, т.е. колонку, которая есть в обеих таблицах и однозначно идентифицирует объект.'}
+  ]},
+ {num:5,short:'Метрики и статистика',title:'Метрики и статистика, которой не страшно доверять',dur:'90 мин',
+  goal:'Не обманываться цифрами: среднее и медиана, база сравнения, взаимосвязи против причинности, правильные вопросы про сравнение вариантов',
+  topics:[
+   {t:'Среднее против медианы',d:'Среднее чувствительно к выбросам. Проверьте сами: нажмите кнопку на схеме и добавьте одно заявление, застрявшее на согласовании аномально долго и посмотрите, какая линия "прыгнет", а какая останется стоять на месте.'},
+   {t:'База сравнения',d:'"Заявлений стало на 50% больше" — от какого числа? <br>Половина от малого количества данных это немного. <br>Переключите схему с процентов на абсолюты и посмотрите, как меняется впечатление.'},
+   {t:'Корреляция ≠ причинность',d:'Число выданных разрешений на строительство и число жалоб на нехватку парковок растут одновременно. <br>Совпадение трендов само по себе ничего не доказывает. Включите третью линию на графике и все встанет на свои места.'}
+  ],
+  practice:'Найдите три числа из последнего отчета по вашему проекту. По каждому ответьте: от какой базы считался процент, что со средним и медианой, может ли здесь быть выброс или сторонний фактор.',
+  quiz:[
+   {q:'Одно заявление, простоявшее на согласовании 250 дней из-за сложной экспертизы, резко подняло "средний срок согласования". Что смотреть?',
+    o:['Ничего: рост есть рост','Среднее это главная метрика','Только максимум','Медиану и выбросы отдельно'],a:3,
+    e:'Среднее тянется за выбросом вверх, медиана показывает типичный срок. Смотрим обе и разбираем выброс отдельно.'},
+   {q:'"Корреляция ≠ причинность" означает:',
+    o:['Все графики врут','Совпадающие тренды сами по себе не доказывают влияние одного на другое','Корреляций не бывает','Причинность невозможно изучить'],a:1,
+    e:'Два показателя могут расти вместе из-за третьего фактора. Чтобы доказать влияние, нужен эксперимент или контроль причин.'},
+   {q:'В отчете написано: "конверсия выросла на 100%". Что сделать в первую очередь?',
+    o:['Уточнить абсолютные значения и базу сравнения','Проверить цвет графика в отчете','Поздравить команду и закрепить успех','Спросить, кто собирал отчет'],a:0,
+    e:'Рост на 100% от 0,1% это всего 0,2%. Сначала смотрим абсолютные значения и базу сравнения и только потом делаем выводы.'}
+  ]},
+ {num:6,short:'Отчеты и дашборды',title:'Отчетность и дашборды',dur:'90 мин',
+  goal:'Различать отчет, дашборд и ad-hoc анализ, понимать, откуда дашборды берут цифры, и не позволять визуализации врать.',
+  topics:[
+   {t:'Три формата аналитической работы',d:'Отчет, дашборд и ad-hoc — это три разных продукта с разной регулярностью, сроками и ценой. <br>Нажимайте на карточки, чтобы сравнить.'},
+   {t:'BI и витрины',d:'Дашборд не "хранит" данные: он читает их из витрины. Сломайте витрину на схеме переключателем и посмотрите, что произойдет со всеми дашбордами сразу, включая панель по срокам согласования.'},
+   {t:'Честная визуализация',d:'Одни и те же данные могут выглядеть как "стагнация" или как "бурный рост". <br>Переключайте шкалу на графике и смотрите, как меняется впечатление при неизменных цифрах.'}
+  ],
+  practice:'Нарисуйте эскиз дашборда для своего проекта: 5–7 виджетов максимум (например, число заявлений, средний срок согласования, доля одобренных по районам). Для каждого подпишите единицы, период и источник данных. Проверьте по правилу честной оси.',
+  quiz:[
+   {q:'Ad-hoc анализ — это:',
+    o:['Ежемесячный регламентный отчет','Разовый анализ под конкретный вопрос','Интерактивный дашборд','Настройка пайплайна данных'],a:1,
+    e:'Ad-hoc это "покопайся и ответь" на разовый вопрос. Регулярность — это отчет или дашборд.'},
+   {q:'Откуда BI-дашборд получает цифры?',
+    o:['Из сырых логов на лету','Из витрины данных (gold-слоя)','Вбивают вручную перед совещанием','Из презентации прошлого года'],a:1,
+    e:'Дашборд читает готовые данные из витрины. Поэтому проблема витрины = проблема сразу всех дашбордов, построенных на ней.'},
+   {q:'Как не соврать графиком по срокам согласования?',
+    o:['Ось с нуля, подписанные единицы, без 3D','Чем больше эффектов, тем нагляднее','Убрать подписи, чтобы чище смотрелось','Начать ось с максимального значения'],a:0,
+    e:'Три простых правила: ось с нуля, единицы на подписях, без декоративного 3D.'}
+  ]},
+ {num:7,short:'Процессы и команда',title:'Процессы: работа с командой данных',dur:'90 мин',
+  goal:'Выстроить рабочий ритм с аналитиками и инженерами: приоритизация, расписание обновлений, управление техдолгом данных.',
+  topics:[
+   {t:'Приоритизация и расписание обновлений',d:'Оценивайте задачи по ценности решения и срочности, а не по громкости заказчика. Матрица ниже показывает четыре квадранта, нажимайте на них и смотрите правила.'},
+   {t:'Техдолг данных',d:'Каждый "быстро поправим в Excel" это костыль. Костыли копятся и однажды отчет разваливается в самый неподходящий момент. <br>Правило: костыль живет неделю; если дольше и это важная, регулярная задача, то идем к дата-инженерам. <br>Поиграйте со счетчиком: добавляйте костыли и смотрите, как растет риск инцидента.'},
+   {t:'Чек-лист разговора',d:'Итоговый чек-лист всего курса в отдельной вкладке слева. <br>Прогоните через него реальную задачу: это и есть выпускная работа курса.'}
+  ],
+  practice:'Прогоните одну реальную задачу через итоговый чек-лист (вкладка слева). Пункты, которые не закрылись, это ваш личный план развития.',
+  quiz:[
+   {q:'Техдолг данных — это:',
+    o:['Долг поставщику данных','Отложенные работы по качеству и надежности данных, за которые платим скоростью и рисками','Тип графика в BI','Подписка на хранилище'],a:1,
+    e:'Техдолг это отложенная инженерная работа. Она не исчезает, а растет и однажды "выстреливает" инцидентом.'},
+   {q:'Договоренность об обновлении данных отвечает на вопросы:',
+    o:['К какому времени данные готовы и каким должно быть их качество','Какого цвета дашборд','Кто платит за хранилище','Сколько аналитиков в команде'],a:0,
+    e:'Соглашение об обновлении данных = срок готовности данных + уровень их качества. Это договоренность, а не пожелание.'},
+   {q:'Задача "перестать каждую неделю собирать реестр заявлений руками в Excel" это задача для:',
+    o:['Дата-инженера','HR-отдела','Дизайнера','Бухгалтерии'],a:0,
+    e:'Автоматизация регулярного потока данных и отчетности это классическая инженерная задача.'}
+  ]}
+];
+
+var GLOSSARY=[
+ ['Таблица данных','Лист с таблицей','Датафрейм','Таблица в базе'],
+ ['Строка','Строка листа','Наблюдение, запись','Запись (record)'],
+ ['Столбец','Столбец','Признак, фича','Поле, атрибут'],
+ ['Тип данных','Формат ячейки','Тип переменной: число, текст, дата','Тип колонки: INT, VARCHAR, DATE'],
+ ['Первичный ключ','Уникальный ID в списке','Ключ идентификации записи','Primary key'],
+ ['Схема данных','Строка заголовков','Структура датафрейма','Schema, DDL'],
+ ['Фильтрация','Автофильтр','WHERE, условие выборки','Фильтр на этапе загрузки'],
+ ['Сводная таблица','Сводная таблица','GROUP BY, агрегация','Агрегация в ETL, витрина'],
+ ['Связь таблиц','ВПР / XLOOKUP','merge, join','JOIN в SQL'],
+ ['Пропуски','Пустые ячейки','NaN, missing values','NULL'],
+ ['Дубликаты','"Удалить дубликаты"','drop_duplicates','DISTINCT, дедупликация в пайплайне'],
+ ['Выбросы','"Проблема в данных"','Outliers','Аномалии, data quality checks'],
+ ['Метрика','Формула в ячейке','Метрика, KPI','Расчет в витрине, metric layer'],
+ ['Дашборд','Лист со сводными и графиками','Дашборд в BI-инструменте','Дашборд поверх витрины'],
+ ['Источник данных','Файл, присланный по почте','Источник, API, события','Source, ingestion'],
+ ['API','Кнопка "обновить курсы валют"','Запрос к API за данными','API-источник, коннектор'],
+ ['Автоматическая выгрузка','"Обновить связи" вручную','Скрипт, notebook','Пайплайн, DAG'],
+ ['Пайплайн','Цепочка макросов руками','Набор скриптов обработки','ETL-job, оркестратор (Airflow)'],
+ ['Расписание обновления','"Нажимать обновить по понедельникам"','Планировщик, cron','Оркестратор, scheduler'],
+ ['Сырые данные','Исходник до правок','Raw data','Raw-слой, bronze, слой ODS'],
+ ['Обработанные данные','Почищенная копия файла','Clean data, датасет','Silver-слой, слой DDS'],
+ ['Витрина данных','Готовая сводная для отчета','Март, готовый датасет','Gold-слой, Data mart'],
+ ['Хранилище данных','Общая папка с файлами','База данных, DWH','Data warehouse, слои bronze/silver/gold'],
+ ['Озеро данных','Папка "сырые выгрузки"','Data lake','Data lake (S3, HDFS)'],
+ ['ETL','Ручные шаги: скопировать, почистить, свести','Трансформация в скриптах','ETL/ELT-процессы'],
+ ['Версионирование','Файлы report_v1_final_2.xlsx','Git, версии кода','Git, версии пайплайнов'],
+ ['Логи','"Почему формула не считает"','Логи скрипта, проверки','Логи пайплайна, алертинг'],
+ ['Статистическая значимость','"Похоже, стало лучше"','p-value, доверительный интервал','Результаты A/B-теста на витрине']
+];
+
+var CHECK=[
+ 'Задача сформулирована через управленческий вопрос, а не "выгрузку"',
+ 'Я знаю, в каких таблицах и витринах лежат нужные данные о заявлениях и объектах',
+ 'Я знаю расписание обновления и свежесть данных из информационной системы',
+ 'Я спросил про пропуски, дубликаты и выбросы',
+ 'Понятна база сравнения: от чего считаются проценты',
+ 'Я посмотрел медиану рядом со средним',
+ 'Если вывод сделан по выборке, то я спрошу про ее размер и значимость',
+ 'Я знаю, кто поддерживает пайплайн, если цифры сломаются',
+ 'Мы договорились о формате результата и сроке',
+ '"Быстро в Excel" перевожу в инженерную задачу, если костылю больше недели'
+];
+
+/* ================= state ================= */
+var KEY='pmDataCourseUrbanV1';
+var state={done:{},quiz:{},check:{},practice:{},certName:''};
+try{var s=localStorage.getItem(KEY);if(s){var loaded=JSON.parse(s);for(var k in loaded)state[k]=loaded[k];}}catch(e){}
+Object.keys(state.quiz).forEach(function(k){var v=state.quiz[k];
+ if(typeof v==='number'){var p=k.split('-'),mq=MODULES[+p[0]],qq=mq&&mq.quiz[+p[1]];if(qq)state.quiz[k]={c:v,ok:v===qq.a};else delete state.quiz[k];}});
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+
+var N_MOD=MODULES.length;
+var ORDER=['home'].concat(MODULES.map(function(m,i){return 'm'+i;})).concat(['gloss','check','cert']);
+var TOTAL_MIN=MODULES.reduce(function(a,m){var v=parseInt(m.dur,10);return a+(isNaN(v)?0:v);},0);
+function hoursLabel(){return TOTAL_MIN?'~'+String(Math.round(TOTAL_MIN/60*10)/10).replace('.',',')+' ч':'—';}
+var current='home';
+var nav=document.getElementById('nav'),main=document.getElementById('main');
+
+function completeModule(mi){
+ if(!state.done['m'+mi]){state.done['m'+mi]=true;save();buildNav();updateProgress();}
+}
+function goNext(mi){completeModule(mi);current=ORDER[ORDER.indexOf('m'+mi)+1];buildNav();render();}
+function allCorrect(mi){
+ var m=MODULES[mi];
+ return m.quiz.every(function(q,qi){var a=state.quiz[mi+'-'+qi];return a&&a.ok;});
+}
+function quizStats(mi){
+ var m=MODULES[mi],ok=0,wrong=0;
+ m.quiz.forEach(function(q,qi){var a=state.quiz[mi+'-'+qi];if(a){if(a.ok)ok++;else wrong++;}});
+ return {ok:ok,wrong:wrong,total:m.quiz.length};
+}
+function getXP(){
+ var xp=0;
+ MODULES.forEach(function(m,i){
+  m.quiz.forEach(function(q,qi){var a=state.quiz[i+'-'+qi];if(a&&a.ok)xp+=10;});
+  if(state.done['m'+i])xp+=40;
+  if(state.practice[i])xp+=10;
+ });
+ return xp;
+}
+function doneCount(){return MODULES.filter(function(m,i){return state.done['m'+i];}).length;}
+
+/* ================= nav ================= */
+function buildNav(){
+ var h='<div class="sep">Курс</div>';
+ h+='<button data-k="home" class="'+(current==='home'?'on':'')+'">🏠 Главная</button>';
+ h+='<div class="sep">Модули</div>';
+ MODULES.forEach(function(m,i){
+  h+='<button data-k="m'+i+'" class="'+(current==='m'+i?'on':'')+'"'+(current==='m'+i?' aria-current="page"':'')+'><span class="mdot" style="background:'+HUES[i]+'"></span>'+m.num+'. '+m.short+'<span class="tick">'+(state.done['m'+i]?'✓':'')+'</span></button>';
+ });
+ h+='<div class="sep">Справочник</div>';
+ h+='<button data-k="gloss" class="'+(current==='gloss'?'on':'')+'">Глоссарий</button>';
+ h+='<button data-k="check" class="'+(current==='check'?'on':'')+'">Итоговый чек-лист</button>';
+ h+='<button data-k="cert" class="'+(current==='cert'?'on':'')+'">🎓 Сертификат</button>';
+ nav.innerHTML=h;
+ nav.querySelectorAll('button').forEach(function(b){b.onclick=function(){current=b.dataset.k;buildNav();render();};});
+}
+function updateProgress(){
+ var n=doneCount();
+ document.getElementById('progFill').style.width=(n/N_MOD*100)+'%';
+ document.getElementById('progLabel').textContent='Пройдено '+n+' из '+N_MOD+' модулей';
+ document.getElementById('brandSub').textContent='Курс для руководителей проектов · '+N_MOD+' модулей';
+ document.getElementById('xpPill').innerHTML='<span class="xp-pill">⚡ '+getXP()+' XP</span>';
+ var br=document.getElementById('badgeRow'),h='';
+ MODULES.forEach(function(m,i){
+  var on=state.done['m'+i];
+  h+='<span class="badge'+(on?' on':'')+'" style="'+(on?'background:'+HUESBG[i]+';color:'+HUES[i]:'')+'" title="'+m.short+(on?' — пройдено':' — заблокировано')+'">'+MICO[i]+'</span>';
+ });
+ br.innerHTML=h;
+}
+/* ================= confetti ================= */
+function confetti(){
+ var colors=[PAL.blue,PAL.amber,PAL.purple,PAL.teal,PAL.green,PAL.pink,PAL.orange];
+ for(var i=0;i<26;i++){
+  (function(){
+   var d=document.createElement('div');d.className='confetti-piece';
+   var size=6+Math.random()*6;
+   d.style.width=size+'px';d.style.height=(size*.5+4)+'px';
+   d.style.left=(Math.random()*100)+'vw';
+   d.style.background=colors[Math.floor(Math.random()*colors.length)];
+   d.style.animationDuration=(2.2+Math.random()*1.6)+'s';
+   d.style.opacity=String(.75+Math.random()*.25);
+   document.body.appendChild(d);
+   setTimeout(function(){d.remove();},4200);
+  })();
+ }
+}
+
+/* ================= module render ================= */
+function renderModule(i){
+ var m=MODULES[i],hue=HUES[i],hueBg=HUESBG[i];
+ var h='<div class="crumb">Модуль '+m.num+' из '+N_MOD+' · '+m.dur+' · тест в конце открывает переход дальше</div>';
+ h+='<h1>'+m.title+'</h1>';
+ h+='<div class="goal" style="--acc:'+hue+'"><b>Цель модуля.</b> '+m.goal+'</div>';
+ m.topics.forEach(function(t,ti){
+  h+='<div class="topic" style="--acc:'+hue+';--accBg:'+hueBg+'"><h3><span class="tnum">'+(ti+1)+'</span>'+t.t+'</h3><p>'+t.d+'</p></div>';
+  (SCHEMES[i]||[]).filter(function(s){return s.pos===ti;}).forEach(function(s){h+='<div class="viz-card" id="viz-'+i+'-'+ti+'"></div>';});
+ });
+ h+='<div class="practice"><div class="pl">Практика</div><p>'+m.practice+'</p><label class="practice-done'+(state.practice[i]?' done':'')+'" id="pracLbl"><input type="checkbox" id="pracCb" '+(state.practice[i]?'checked':'')+'>'+(state.practice[i]?'✓ Практика выполнена (+10 XP)':'Отметить практику выполненной (+10 XP)')+'</label></div>';
+ /* quiz */
+ var st=quizStats(i);
+ h+='<div class="quiz" style="--acc:'+hue+'">';
+ h+='<div class="q-head"><h2 class="sec" style="margin:0">Проверь себя</h2><div class="q-dots">';
+ m.quiz.forEach(function(q,qi){var a=state.quiz[i+'-'+qi];h+='<span class="q-dot '+(a?(a.ok?'ok':'bad'):'')+'" id="dot-'+qi+'"></span>';});
+ h+='</div><div class="q-actions">';
+ h+='<button class="mini-btn" id="rvBtn">Мои результаты</button>';
+ h+='<button class="mini-btn" id="retryBtn" '+(st.wrong?'':'disabled')+'>Пересдать неверные</button>';
+ h+='<button class="mini-btn" id="resetQuizBtn">Сбросить ответы</button>';
+ h+='</div></div>';
+ m.quiz.forEach(function(q,qi){
+  h+='<div class="q"><p class="q-text">'+(qi+1)+'. '+q.q+'</p><div class="opts">';
+  q.o.forEach(function(op,oi){h+='<button class="opt" data-q="'+qi+'" data-o="'+oi+'">'+op+'</button>';});
+  h+='</div><p class="q-exp" id="exp-'+qi+'" aria-live="polite" style="display:none"></p></div>';
+ });
+ h+='<div class="review" id="review"><div class="rv-head">Результаты попытки</div><div id="rvBody"></div></div>';
+ h+='<div class="banner'+(allCorrect(i)?' show':'')+'" id="banner" role="status"><span class="bcheck">✓</span>Все ответы верны — модуль пройден! Кнопка "Дальше" разблокирована.</div>';
+ h+='</div>';
+ /* pager */
+ var idx=ORDER.indexOf('m'+i);
+ var prevK=ORDER[idx-1],nextK=ORDER[idx+1];
+ h+='<div class="pager">';
+ h+= prevK?'<button class="pg-btn ghost" id="pgPrev">← '+pageName(prevK)+'</button>':'<span></span>';
+ if(nextK){
+  var ok=allCorrect(i);
+  h+='<span style="text-align:right"><button class="pg-btn" id="pgNext" '+(ok?'':'disabled')+'>'+pageName(nextK)+' →</button>';
+  h+='<div class="pg-lock '+(ok?'open':'')+'" id="pgLock">'+(ok?'✓ Можно идти дальше':'Ответьте верно на все вопросы модуля и тогда кнопка активируется')+'</div></span>';
+ }
+ h+='</div>';
+ main.innerHTML=h;
+
+ (SCHEMES[i]||[]).forEach(function(s){var el=document.getElementById('viz-'+i+'-'+s.pos);if(el)s.build(el);});
+
+ main.querySelectorAll('.opt').forEach(function(b){b.onclick=function(){answer(i,+b.dataset.q,+b.dataset.o);};});
+ m.quiz.forEach(function(q,qi){if(state.quiz[i+'-'+qi])paintAnswer(i,qi);});
+ updateDots(i);updateBanner(i);
+
+ document.getElementById('pracCb').onchange=function(){
+  state.practice[i]=this.checked;save();updateProgress();
+  var lbl=document.getElementById('pracLbl');
+  lbl.classList.toggle('done',this.checked);
+  lbl.lastChild.textContent=this.checked?'✓ Практика выполнена (+10 XP)':'Отметить практику выполненной (+10 XP)';
+ };
+ document.getElementById('rvBtn').onclick=function(){toggleReview(i);};
+ document.getElementById('retryBtn').onclick=function(){
+  m.quiz.forEach(function(q,qi){var a=state.quiz[i+'-'+qi];if(a&&!a.ok)delete state.quiz[i+'-'+qi];});
+  save();render();scrollToQuiz();
+ };
+ document.getElementById('resetQuizBtn').onclick=function(){
+  if(confirm('Сбросить все ответы этого модуля?')){m.quiz.forEach(function(q,qi){delete state.quiz[i+'-'+qi];});delete state.done['m'+i];save();buildNav();updateProgress();render();scrollToQuiz();}
+ };
+ if(prevK)document.getElementById('pgPrev').onclick=function(){current=prevK;buildNav();render();};
+ var nx=document.getElementById('pgNext');
+ if(nx&&ok)nx.onclick=function(){goNext(i);};
+}
+
+function scrollToQuiz(){var qz=main.querySelector('.quiz');if(qz)qz.scrollIntoView();}
+function pageName(k){
+ if(k==='home')return 'Главная';
+ if(k==='gloss')return 'Глоссарий';
+ if(k==='check')return 'Итоговый чек-лист';
+ if(k==='cert')return 'Сертификат';
+ return 'Модуль '+(+k.slice(1)+1);
+}
+
+function paintAnswer(mi,qi){
+ var q=MODULES[mi].quiz[qi],a=state.quiz[mi+'-'+qi];
+ main.querySelectorAll('.opt[data-q="'+qi+'"]').forEach(function(b){
+  var oi=+b.dataset.o;b.disabled=true;
+  if(oi===q.a)b.classList.add('ok');
+  else if(oi===a.c)b.classList.add('bad');
+  else b.style.opacity='.45';
+ });
+ var exp=document.getElementById('exp-'+qi);
+ exp.style.display='block';
+ exp.innerHTML='<b>'+(a.ok?'Верно.':'Не совсем.')+'</b> '+q.e;
+}
+function answer(mi,qi,chosen){
+ if(state.quiz[mi+'-'+qi])return;
+ var q=MODULES[mi].quiz[qi];
+ state.quiz[mi+'-'+qi]={c:chosen,ok:chosen===q.a};save();
+ paintAnswer(mi,qi);updateDots(mi);updateBanner(mi,true);
+ var rb=document.getElementById('retryBtn');if(rb)rb.disabled=quizStats(mi).wrong===0;
+}
+function updateDots(mi){
+ MODULES[mi].quiz.forEach(function(q,qi){
+  var d=document.getElementById('dot-'+qi);if(!d)return;
+  var a=state.quiz[mi+'-'+qi];
+  d.className='q-dot '+(a?(a.ok?'ok':'bad'):'');
+ });
+}
+function updateBanner(mi,celebrate){
+ var ok=allCorrect(mi);
+ if(ok)completeModule(mi);
+ var b=document.getElementById('banner');
+ if(b){var prevShow=b.classList.contains('show');b.classList.toggle('show',ok);if(ok&&!prevShow&&celebrate)confetti();}
+ var nx=document.getElementById('pgNext');
+ if(nx){nx.disabled=!ok;if(ok)nx.onclick=function(){goNext(mi);};}
+ var lk=document.getElementById('pgLock');
+ if(lk){lk.classList.toggle('open',ok);lk.innerHTML=ok?'✓ Можно идти дальше':'🔒 Ответьте верно на все вопросы модуля — тогда кнопка активируется';}
+}
+function toggleReview(mi){
+ var rv=document.getElementById('review');
+ rv.classList.toggle('open');
+ if(!rv.classList.contains('open'))return;
+ var h='';
+ MODULES[mi].quiz.forEach(function(q,qi){
+  var a=state.quiz[mi+'-'+qi];
+  h+='<div class="rv-item"><span class="rv-st '+(a?(a.ok?'ok':'bad'):'')+'">'+(a?(a.ok?'✓ верно':'✗ неверно'):'… без ответа')+'</span><span class="rv-q">'+(qi+1)+'. '+q.q+'</span>';
+  h+='<div class="rv-a">Ваш ответ: <span class="'+(a&&a.ok?'va':'ya')+'">'+(a?q.o[a.c]:'—')+'</span>';
+  if(a&&!a.ok)h+=' &nbsp;·&nbsp; верный: <span class="va">'+q.o[q.a]+'</span>';
+  h+='</div><div class="rv-e">'+q.e+'</div></div>';
+ });
+ document.getElementById('rvBody').innerHTML=h;
+}
+
+/* ================= glossary & checklist ================= */
+function renderGlossary(){
+ var h='<div class="crumb">Справочник</div><h1>Глоссарий: три мира одного понятия</h1>';
+ h+='<p style="color:var(--mut);font-size:16.5px;margin-top:10px;max-width:900px">Каждое понятие в трех вселенных: привычный Excel, работа аналитика данных и работа дата-инженера. Используйте поиск.</p>';
+ h+='<input class="g-search" id="gSearch" placeholder="Найти понятие… например "витрина" или "join"">';
+ h+='<div class="g-wrap"><table><thead><tr><th>Понятие</th><th><span class="dot" style="background:'+PAL.blue+'"></span>В Excel</th><th><span class="dot" style="background:'+PAL.purple+'"></span>В аналитике данных</th><th><span class="dot" style="background:'+PAL.teal+'"></span>В инженерии данных</th></tr></thead><tbody id="gBody">';
+ GLOSSARY.forEach(function(r){h+='<tr><td class="term">'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td></tr>';});
+ h+='</tbody></table><div class="empty" id="gEmpty" style="display:none">Ничего не нашлось, попробуйте другой запрос</div></div>';
+ var idx=ORDER.indexOf('gloss');
+ h+='<div class="pager"><button class="pg-btn ghost" id="pgPrev">← '+pageName(ORDER[idx-1])+'</button><button class="pg-btn" id="pgNext">'+pageName(ORDER[idx+1])+' →</button></div>';
+ main.innerHTML=h;
+ document.getElementById('gSearch').oninput=function(){
+  var q=this.value.trim().toLowerCase(),n=0;
+  document.querySelectorAll('#gBody tr').forEach(function(tr){
+   var show=!q||tr.textContent.toLowerCase().indexOf(q)!==-1;
+   tr.style.display=show?'':'none';if(show)n++;
+  });
+  document.getElementById('gEmpty').style.display=n?'none':'block';
+ };
+ document.getElementById('pgPrev').onclick=function(){current=ORDER[idx-1];buildNav();render();};
+ document.getElementById('pgNext').onclick=function(){current=ORDER[idx+1];buildNav();render();};
+}
+function renderChecklist(){
+ var h='<div class="crumb">Выпускная работа</div><h1>Итоговый чек-лист руководителя проектов по работе с данными</h1>';
+ h+='<p style="color:var(--mut);font-size:16.5px;margin-top:10px;max-width:900px">Прогоните через него реальную задачу. Все, что не закрылось, это ваш план развития.</p>';
+ h+='<div class="ck-card"><div class="ck-top"><span>Прогресс чек-листа</span><span id="ckProg" style="color:var(--green)"></span></div><div class="prog-bar"><div class="prog-fill" id="ckFill"></div></div>';
+ CHECK.forEach(function(c,i){h+='<label class="ck-item"><input type="checkbox" data-i="'+i+'" '+(state.check[i]?'checked':'')+'><span>'+c+'</span></label>';});
+ h+='</div>';
+ var idx=ORDER.indexOf('check');
+ h+='<div class="pager"><button class="pg-btn ghost" id="pgPrev">← '+pageName(ORDER[idx-1])+'</button><span></span></div>';
+ main.innerHTML=h;
+ function updCk(){
+  var n=CHECK.filter(function(c,i){return state.check[i];}).length;
+  document.getElementById('ckProg').textContent=n+' из '+CHECK.length;
+  document.getElementById('ckFill').style.width=(n/CHECK.length*100)+'%';
+ }
+ main.querySelectorAll('.ck-item input').forEach(function(cb){
+  cb.onchange=function(){state.check[cb.dataset.i]=cb.checked;save();updCk();};
+ });
+ updCk();
+ document.getElementById('pgPrev').onclick=function(){current=ORDER[idx-1];buildNav();render();};
+}
+
+/* ================= schemes ================= */
+/* keyboard: any element with role="button" that is not a real <button> reacts to Enter/Space */
+document.addEventListener('keydown',function(e){
+ var t=e.target;
+ if((e.key==='Enter'||e.key===' ')&&t.getAttribute('role')==='button'&&t.tagName!=='BUTTON'&&t.tagName!=='A'&&!t.onkeydown){e.preventDefault();t.click();}
+});
+function kb(el){el.setAttribute('role','button');el.setAttribute('tabindex','0');return el;}
+
+function vizHead(icon,bg,title,sub){
+ return '<div class="viz-title"><span class="vt-ico" style="background:'+bg+'">'+icon+'</span>'+title+'</div><div class="viz-sub">'+sub+'</div>';
+}
+var SCHEMES={
+ 0:[
+  {pos:0,build:function(el){
+   el.innerHTML=vizHead('👥',PAL.blueBg,'Кто за что отвечает','Нажмите на роль и увидите ее вопрос, задачи и момент, когда к ней идти.')+
+   '<div class="viz-body"><div class="role-grid" id="rg"></div><div class="viz-panel" id="rp" style="margin-top:14px"></div></div>';
+   var R=[
+    {n:'Аналитик данных',c:PAL.blue,bg:PAL.blueBg,q:'"Что происходит и почему?"',z:'Метрики, отчеты, ad-hoc аналитика, сравнение вариантов, поиск закономерностей в готовых данных.',w:'Нужно понять, почему вырос срок согласования в одном районе; посчитать долю заявлений, одобренных с первого раза; проверить гипотезу о причине задержек.'},
+    {n:'Дата-инженер',c:PAL.green,bg:PAL.greenBg,q:'"Чтобы данные были и были правильными"',z:'Пайплайны, хранилища, расписания загрузок, качество данных на входе, техническая настройка доступов.',w:'Нужна автоматическая выгрузка из информационной системы, новый источник данных, сломалась загрузка, "цифры в отчете вчерашние".'},
+    {n:'Владелец данных',c:PAL.purple,bg:PAL.purpleBg,q:'"Данные полные, актуальные и понятные?"',z:'Качество и смысл данных в своей области: справочники, определения терминов, правила заполнения полей, согласование доступов и изменений.',w:'Нужно понять, что означает статус "одобрено", почему данные за период неполные, кто и как вносит изменения в реестр заявлений.'}];
+   var rg=document.getElementById('rg'),rp=document.getElementById('rp');
+   R.forEach(function(r,i){
+    var d=kb(document.createElement('div'));d.className='role-card'+(i===0?' sel':'');
+    d.style.setProperty('--rc',r.c);d.style.setProperty('--rcBg',r.bg);
+    d.innerHTML='<div class="rc-name">'+r.n+'</div><div class="rc-q">'+r.q+'</div>';
+    d.onclick=function(){
+     rg.querySelectorAll('.role-card').forEach(function(x){x.classList.remove('sel');});
+     d.classList.add('sel');
+     rp.innerHTML='<b>'+r.n+'</b> · '+r.q+'<br><b>Зона ответственности:</b> '+r.z+'<br><b>Идти, когда:</b> '+r.w;
+    };
+    rg.appendChild(d);
+   });
+   rg.children[0].click();
+  }},
+  {pos:2,build:function(el){
+   el.innerHTML=vizHead('🧭',PAL.amberBg,'Формула задачи, которую не переделают','Четыре шага. Нажимайте на каждый — рядом пример из жизни.')+
+   '<div class="viz-body"><div class="chip-row" id="fr"></div><div class="viz-panel" id="fp" style="margin-top:14px"></div></div>';
+   var F=[
+    {n:'Контекст',c:PAL.blue,bg:PAL.blueBg,ex:'<b>Контекст.</b> "Месяц назад мы запустили новую электронную форму подачи заявления на портале и сейчас решаем, переводить ли на нее всех заявителей."'},
+    {n:'Вопрос',c:PAL.purple,bg:PAL.purpleBg,ex:'<b>Вопрос.</b> "Как новая форма повлияла на долю успешно поданных заявлений и на средний срок согласования по сравнению со старой формой?"'},
+    {n:'Решение',c:PAL.green,bg:PAL.greenBg,ex:'<b>Решение.</b> "Если доля ошибок не выросла, а срок сократился, то переводим всех заявителей и отключаем старую форму."'},
+    {n:'Формат результата',c:PAL.orange,bg:PAL.orangeBg,ex:'<b>Формат.</b> "Таблица на одну страницу: доля успешных заявлений и срок по неделям + три вывода текстом. Нужно к совещанию в четверг."'}];
+   var fr=document.getElementById('fr'),fp=document.getElementById('fp');
+   F.forEach(function(f,i){
+    var b=document.createElement('button');b.className='fchip'+(i===0?' sel':'');
+    b.style.setProperty('--fc',f.c);b.textContent=f.n;
+    b.onclick=function(){
+     fr.querySelectorAll('.fchip').forEach(function(x){x.classList.remove('sel');});
+     b.classList.add('sel');fp.innerHTML=f.ex;
+    };
+    fr.appendChild(b);
+    if(i<F.length-1){var a=document.createElement('span');a.className='farrow';a.textContent='→';fr.appendChild(a);}
+   });
+   fr.children[0].click();
+  }}
+ ],
+ 1:[
+  {pos:0,build:function(el){
+   el.innerHTML=vizHead('🥞',PAL.amberBg,'Слои данных: не трогай исходник','Данные созревают по слоям. Нажимайте на слой, чтобы увидеть, что с ним можно и нельзя делать.')+
+   '<div class="viz-body" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start"><div class="layer-stack" id="ls"></div><div class="viz-panel" id="lp"></div></div>';
+   var L=[
+    {n:'BRONZE · сырые',s:'данные как пришли из информационной системы',w:'86%',c:'#e8b07f',cb:'#fdf1e3',rule:'<b>Можно:</b> только сохранять и ничего не менять.<br><b>Нельзя:</b> править, удалять, "подчищать руками". <br>Исходник это страховка: любую ошибку обработки можно пересчитать заново.<br><b>Аналог Excel:</b> исходный файл выгрузки заявлений, который вы никогда не редактируете.'},
+    {n:'SILVER · очищенные',s:'типы приведены, дубли убраны',w:'100%',c:'#b9c4d8',cb:'#eef1f7',rule:'<b>Можно:</b> чистить, приводить типы, удалять дубликаты.<br><b>Зачем:</b> здесь данные становятся пригодными для расчетов.<br><b>Аналог Excel:</b> копия файла, которую вы почистили формулами и фильтрами.'},
+    {n:'GOLD · витрины',s:'агрегаты и метрики для отчетов',w:'72%',c:'#f0cf6b',cb:'#fdf6df',rule:'<b>Можно:</b> считать бизнес-метрики и строить дашборды.<br><b>Зачем:</b> отчетность читает готовые наборы мгновенно, не трогая терабайты сырых данных.<br><b>Аналог Excel:</b> готовая сводная таблица для руководства.'}];
+   var ls=document.getElementById('ls'),lp=document.getElementById('lp');
+   L.forEach(function(l,i){
+    var d=kb(document.createElement('div'));d.className='layer';d.style.width=l.w;
+    d.style.background=l.cb;d.style.borderColor=l.c;
+    d.innerHTML='<div class="ln" style="color:'+l.c+'">'+l.n+'</div><div class="ls">'+l.s+'</div>';
+    d.onclick=function(){
+     ls.querySelectorAll('.layer').forEach(function(x){x.style.boxShadow='none';});
+     d.style.boxShadow='0 0 0 2px '+l.c;lp.innerHTML=l.rule;
+    };
+    ls.appendChild(d);
+    if(i<L.length-1){var a=document.createElement('div');a.className='layer-arrow';a.textContent='↓ обработка ↓';ls.appendChild(a);}
+   });
+   ls.children[0].click();
+  }},
+  {pos:2,build:function(el){
+   el.innerHTML=vizHead('🛡️',PAL.tealBg,'Четыре стража качества данных',' ')+
+   '<div class="viz-body"><div class="qgrid" id="qg"></div><div class="viz-panel" id="qp" style="margin-top:14px"></div></div>';
+   var Q=[
+    {n:'Полнота',c:PAL.blue,bg:PAL.blueBg,d:'Нет ли пропусков? Все ли строки доехали из источника? <br>Проверка: счетчик строк на входе и выходе пайплайна. <br>Пример боли: за вчера 0 заявлений в отчете, или правда никто не подавал, или выгрузка из ИС упала?'},
+    {n:'Уникальность',c:PAL.purple,bg:PAL.purpleBg,d:'Нет ли дубликатов? Одно заявление должно попасть в отчет один раз. <br>Проверка: дедупликация по ключу. <br>Пример боли: "заявлений стало вдвое больше", но нет, просто выгрузка задвоилась.'},
+    {n:'Актуальность',c:PAL.amber,bg:PAL.amberBg,d:'Данные за нужную дату? Обновились ли по расписанию? <br>Проверка: мониторинг обновления данных. <br>Пример боли: на совещании обсуждают сроки за позавчера, думая, что за вчера.'},
+    {n:'Консистентность',c:PAL.teal,bg:PAL.tealBg,d:'Форматы единообразны? "12.05.2026", "2026-05-12" и "12 мая" это три разных значения для машины. <br>Проверка: типы и справочники. <br>Пример боли: сводная "не сходится", потому что половина дат это текст.'}];
+   var qg=document.getElementById('qg'),qp=document.getElementById('qp');
+   Q.forEach(function(q,i){
+    var d=kb(document.createElement('div'));d.className='qchip';
+    d.style.setProperty('--qc',q.c);d.style.setProperty('--qcBg',q.bg);
+    d.innerHTML='<div class="qn">'+q.n+'</div>';
+    d.onclick=function(){
+     qg.querySelectorAll('.qchip').forEach(function(x){x.classList.remove('sel');});
+     d.classList.add('sel');qp.innerHTML='<b>'+q.n+'.</b> '+q.d;
+    };
+    qg.appendChild(d);
+   });
+   qg.children[0].click();
+  }}
+ ],
+ 2:[
+  {pos:1,build:function(el){
+   el.innerHTML=vizHead('⚙️',PAL.tealBg,'Конвейер данных','Нажмите "Запустить поток" и наблюдайте путь данных или кликайте по узлам сами.')+
+   '<div class="viz-body"><div class="pipe" id="pp"></div><div style="margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button class="vbtn" id="playBtn">▶ Запустить поток данных</button><div class="viz-panel" id="pcap" style="flex:1;min-width:260px;min-height:60px">Нажмите на узел или запустите весь поток.</div></div></div>';
+   var N=[
+    {n:'Источники',s:'Информационная система · файлы организации · API · web-портал',c:PAL.amber,cb:PAL.amberBg,cap:'<b>Источники.</b> Данные рождаются в разных системах: ИС, Excel/CSV-выгрузки, API, события на портале. У каждого свой формат и свое расписание.'},
+    {n:'Extract',s:'забрали данные',c:PAL.blue,cb:PAL.blueBg,cap:'<b>Extract.</b> Забираем данные из источника: по расписанию или по событию. Здесь же фиксируем исходник в сыром слое — bronze (вариант названия - слой ODS).'},
+    {n:'Transform',s:'почистили и свели',c:PAL.blue,cb:PAL.blueBg,cap:'<b>Transform.</b> Делаем копию данных из слоя bronze и далее чистим: типы, дубликаты, пропуски. Сверяем справочники. Ошибка здесь = все отчеты врут, поэтому шаги проверяются тестами.'},
+    {n:'Load',s:'положили в хранилище',c:PAL.blue,cb:PAL.blueBg,cap:'<b>Load.</b> Помещаем результат в хранилище — silver-слой (вариант названия - слой DDS). Каждый запуск версионируется: можно понять, что и когда изменилось.'},
+    {n:'Хранилище',s:'warehouse / lake',c:PAL.green,cb:PAL.greenBg,cap:'<b>Хранилище.</b> Единый дом для всех данных организации. Озера хранят сырые данные в любом формате, а вот витрины только готовые к отчетам наборы.'},
+    {n:'Витрина',s:'gold или слой DM',c:PAL.purple,cb:PAL.purpleBg,cap:'<b>Витрина.</b> Готовые агрегаты под конкретные отчеты: заявления по неделям, сроки согласования по районам. Именно сюда в gold-слой смотрят дашборды (вариант названия - слой Data Mart).'},
+    {n:'Дашборд',s:'BI-инструмент',c:PAL.teal,cb:PAL.tealBg,cap:'<b>Дашборд.</b> BI-инструмент читает витрину и рисует графики. Полный цикл от источника до экрана занимает от минут до часов, поэтому у данных всегда должно быть согласованное время обновления.'}];
+   var pp=document.getElementById('pp'),cap=document.getElementById('pcap');
+   N.forEach(function(n,i){
+    var d=kb(document.createElement('div'));d.className='pnode';d.dataset.i=i;
+    d.style.setProperty('--nc',n.c);d.style.setProperty('--ncBg',n.cb);
+    d.innerHTML='<div class="pn" style="color:'+n.c+'">'+n.n+'</div><div class="ps">'+n.s+'</div>';
+    d.onclick=function(){hot(i);};
+    pp.appendChild(d);
+    if(i<N.length-1){var a=document.createElement('div');a.className='parrow';a.textContent='→';pp.appendChild(a);}
+   });
+   function hot(i){
+    pp.querySelectorAll('.pnode').forEach(function(x){x.classList.remove('hot');});
+    var d=pp.querySelector('.pnode[data-i="'+i+'"]');d.classList.add('hot');
+    cap.innerHTML=N[i].cap;
+   }
+   document.getElementById('playBtn').onclick=function(){
+    this.disabled=true;var self=this,i=0;
+    var t=setInterval(function(){
+     hot(i);i++;
+     if(i>=N.length){clearInterval(t);setTimeout(function(){self.disabled=false;},400);}
+    },1300);
+   };
+  }},
+  {pos:2,build:function(el){
+   el.innerHTML=vizHead('🏠',PAL.greenBg,'Три дома для данных',' ')+
+   '<div class="viz-body"><div class="role-grid" id="sg"></div><div class="viz-panel" id="sp" style="margin-top:14px"></div></div>';
+   var S=[
+    {n:'Data lake',c:PAL.teal,bg:PAL.tealBg,q:'"Склад без полок"',z:'Озеро это огромное хранилище сырых данных в любых форматах: логи, JSON, картинки, выгрузки. <br>Дешево хранить, тяжело пользоваться без подготовки. <br>Есть не в каждой организации: если сырые данные невелики, их можно хранить сразу в хранилище.'},
+    {n:'Data warehouse',c:PAL.blue,bg:PAL.blueBg,q:'"Структурированная квартира"',z:'Хранилище структурированных данных для аналитики: таблицы со схемами, история изменений, быстрые запросы. <br>Сюда попадают данные после ETL. <br>Если пропустить, то цифры не сойдутся.'},
+    {n:'Data Mart (витрина)',c:PAL.purple,bg:PAL.purpleBg,q:'"Сервированный стол"',z:'Готовые наборы под конкретные задачи: gold-слой с метриками и агрегатами. <br>Именно отсюда питаются дашборды и регулярные отчеты. <br>Если пропустить, то заказчик не увидит результата.'}];
+   var sg=document.getElementById('sg'),sp=document.getElementById('sp');
+   S.forEach(function(r,i){
+    var d=kb(document.createElement('div'));d.className='role-card'+(i===0?' sel':'');
+    d.style.setProperty('--rc',r.c);d.style.setProperty('--rcBg',r.bg);
+    d.innerHTML='<div class="rc-name">'+r.n+'</div><div class="rc-q">'+r.q+'</div>';
+    d.onclick=function(){
+     sg.querySelectorAll('.role-card').forEach(function(x){x.classList.remove('sel');});
+     d.classList.add('sel');sp.innerHTML='<b>'+r.n+'</b> · '+r.q+'<br>'+r.z;
+    };
+    sg.appendChild(d);
+   });
+   sg.children[0].click();
+  }}
+ ],
+ 3:[
+  {pos:0,build:function(el){
+   el.innerHTML=vizHead('🔤',PAL.purpleBg,'Разбери запрос по словам','Настоящий SQL-запрос. Нажимайте на цветные части и увидите перевод на русский.')+
+   '<div class="viz-body"><div style="background:#fbfbfe;border:1.5px solid var(--line);border-radius:12px;padding:16px 20px;line-height:2.2">'+
+   '<span class="tok" data-cl="sel" style="color:'+PAL.amber+';background:'+PAL.amberBg+'">SELECT district,</span> <span class="tok" data-cl="sel" style="color:'+PAL.amber+';background:'+PAL.amberBg+'">COUNT(*)</span><br>'+
+   '<span class="tok" data-cl="from" style="color:'+PAL.blue+';background:'+PAL.blueBg+'">FROM applications</span><br>'+
+   '<span class="tok" data-cl="where" style="color:'+PAL.green+';background:'+PAL.greenBg+'">WHERE status = \'одобрено\'</span><br>'+
+   '<span class="tok" data-cl="group" style="color:'+PAL.purple+';background:'+PAL.purpleBg+'">GROUP BY district</span>'+
+   '</div><div class="viz-panel" id="sqp">Нажмите на часть запроса.</div>'+
+   '<table class="mini-table"><thead><tr><th>Результат запроса</th><th></th></tr></thead><tbody><tr><td>district</td><td>count</td></tr><tr><td>Южный</td><td>124</td></tr><tr><td>Северный</td><td>91</td></tr><tr><td>Западный</td><td>78</td></tr></tbody></table></div>';
+   var M={
+    sel:'<b>SELECT</b> — "выбери такие-то колонки". Здесь: район и количество заявлений. Это ответ на вопрос "что показать".',
+    from:'<b>FROM applications</b> — "из таблицы заявлений". Каждый запрос начинается с ответа на вопрос "где лежат данные".',
+    where:'<b>WHERE</b> — "оставь только строки, где…". Здесь: заявления со статусом "одобрено". Это автофильтр.',
+    group:'<b>GROUP BY district</b> — "сверни в группы по району". Количество считается отдельно для каждого района. Это сводная таблица.'};
+   var p=document.getElementById('sqp');
+   el.querySelectorAll('.tok').forEach(function(t){kb(t);t.onclick=function(){p.innerHTML=M[t.dataset.cl];};});
+  }},
+  {pos:2,build:function(el){
+   el.innerHTML=vizHead('⏱️',PAL.pinkBg,'Сколько на самом деле стоит "выгрузка"','Типичный состав работы за словом "просто выгрузить". Ширина полосы это примерная доля времени.')+
+   '<div class="viz-body" id="tw"></div>';
+   var T=[
+    {n:'Найти нужные таблицы и понять их смысл',d:'1–2 часа · запросы к инженерам, документация',w:'30%',c:PAL.blue},
+    {n:'Проверить качество: пропуски, дубли, свежесть',d:'1–3 часа · иначе отчет будет врать',w:'45%',c:PAL.amber},
+    {n:'Склеить таблицы (JOIN) и сверить итоги',d:'2–8 часов · самая кропотливая часть',w:'70%',c:PAL.purple},
+    {n:'Посчитать метрики и оформить результат',d:'1–4 часа · проверка на адекватность цифр',w:'40%',c:PAL.teal}];
+   var tw=document.getElementById('tw');
+   T.forEach(function(t){
+    var d=document.createElement('div');d.style.marginTop='14px';
+    d.innerHTML='<div style="display:flex;justify-content:space-between;font-size:15px"><b>'+t.n+'</b><span style="color:var(--faint);font-size:13.5px">'+t.d+'</span></div><div class="meter"><div class="meter-fill" style="width:0%;background:'+t.c+'" data-w="'+t.w+'"></div></div>';
+    tw.appendChild(d);
+   });
+   setTimeout(function(){
+    tw.querySelectorAll('.meter-fill').forEach(function(f){f.style.width=f.dataset.w;});
+   },150);
+  }}
+ ],
+ 4:[
+  {pos:0,build:function(el){
+   el.innerHTML=vizHead('📈',PAL.greenBg,'Среднее против медианы','Сроки согласования заявлений за неделю, дней. Две линии: среднее и медиана. Нажмите кнопку, чтобы добавить одно заявление, застрявшее в очереди.')+
+   '<div class="viz-body"><div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap"><svg id="mmsvg" width="600" height="300" viewBox="0 0 600 300" style="flex:1 1 360px;min-width:300px;max-width:600px"></svg>'+
+   '<div style="flex:1;min-width:240px"><button class="vbtn" id="outBtn">＋ Добавить заявление на 250 дней</button><div class="viz-panel" id="mmcap" aria-live="polite" style="margin-top:12px"></div>'+
+   '<div class="legend" style="margin-top:12px"><span class="li"><span class="sw" style="background:'+PAL.blue+'"></span>среднее</span><span class="li"><span class="sw" style="background:'+PAL.green+'"></span>медиана</span></div></div></div></div>';
+   var base=[12,14,13,15,14,16,15],data=base.slice(),out=false;
+   function med(a){var s=a.slice().sort(function(x,y){return x-y;});var n=s.length;return n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2;}
+   function tagLbl(x,y,txt,c){
+    return '<g><rect x="'+x+'" y="'+(y-13)+'" width="120" height="26" rx="13" fill="#fff" stroke="'+c+'" stroke-width="2"/>'+
+           '<text x="'+(x+60)+'" y="'+(y+4.5)+'" text-anchor="middle" font-size="11" font-weight="700" fill="'+c+'">'+txt+'</text></g>';
+   }
+   function draw(){
+    var svg=document.getElementById('mmsvg'),mx=Math.max.apply(null,data),H=210,PR=468,n=data.length;
+    var step=(PR-46)/n,bw=Math.min(52,step-14);
+    var mean=data.reduce(function(a,b){return a+b;},0)/n,md=med(data);
+    var y=function(v){return 260-(v/mx)*H;};
+    var h='<line x1="30" y1="260" x2="'+PR+'" y2="260" stroke="#c9cedb" stroke-width="2"/>';
+    data.forEach(function(v,i){
+     var x=46+i*step,bh=260-y(v),hotv=v>50;
+     h+='<rect x="'+x+'" y="'+y(v)+'" width="'+bw+'" height="'+bh+'" rx="6" fill="'+(hotv?PAL.red:'#7ea6ea')+'"/>';
+     h+='<text x="'+(x+bw/2)+'" y="280" text-anchor="middle" font-size="11.5" fill="'+PAL.faint+'">'+(i+1)+'</text>';
+    });
+    h+='<text x="30" y="296" font-size="11" fill="'+PAL.faint+'">номер заявления</text>';
+    var ym=y(mean),yd=y(md);
+    h+='<line x1="30" y1="'+ym+'" x2="'+PR+'" y2="'+ym+'" stroke="'+PAL.blue+'" stroke-width="3" stroke-dasharray="8 5"/>';
+    h+='<line x1="30" y1="'+yd+'" x2="'+PR+'" y2="'+yd+'" stroke="'+PAL.green+'" stroke-width="3"/>';
+    /* подписи вынесены в правое поле: на столбцы они больше не наезжают,
+       а если среднее и медиана почти совпали — разводим их по вертикали */
+    var lm=ym,ld=yd;
+    if(Math.abs(lm-ld)<28){var c0=(ym+yd)/2;lm=c0-15;ld=c0+15;}
+    lm=Math.max(16,Math.min(252,lm));ld=Math.max(16,Math.min(252,ld));
+    /* значения столбцов рисуем последними и с белой обводкой,
+       иначе линия среднего перечеркивает цифру */
+    data.forEach(function(v,i){
+     var x=46+i*step;
+     var lw=String(v).length*8+10;
+     h+='<rect x="'+(x+bw/2-lw/2)+'" y="'+(y(v)-22)+'" width="'+lw+'" height="18" rx="5" fill="#fff" fill-opacity=".9"/>';
+     h+='<text x="'+(x+bw/2)+'" y="'+(y(v)-8)+'" text-anchor="middle" font-size="12.5" font-weight="700" fill="'+PAL.ink+'">'+v+'</text>';
+    });
+    h+=tagLbl(PR+10,lm,'среднее '+Math.round(mean).toLocaleString('ru-RU')+' дн.',PAL.blue);
+    h+=tagLbl(PR+10,ld,'медиана '+md.toLocaleString('ru-RU')+' дн.',PAL.green);
+    svg.innerHTML=h;
+    var cap=document.getElementById('mmcap');
+    cap.innerHTML=out
+     ?'<b>Один выброс перетащил среднее почти в 3 раза</b> — с ≈14 до ≈44 дней, хотя 7 из 8 заявлений уложились в 12–16 дней. <br><b>Медиана почти не сдвинулась</b> — с 14 до 14,5. Вывод: всегда смотрите обе и спрашивайте про выбросы.'
+     :'<b>Пока все спокойно:</b> среднее ≈ медиане, сроки одного порядка. Так бывает редко. <br>Добавьте выброс и посмотрите, что сломается.';
+   }
+   document.getElementById('outBtn').onclick=function(){
+    out=!out;data=out?base.concat([250]):base.slice();
+    this.textContent=out?'− Убрать выброс':'＋ Добавить заявление на 250 дней';
+    draw();
+   };
+   draw();
+  }},
+  {pos:1,build:function(el){
+   el.innerHTML=vizHead('🧭',PAL.greenBg,'"+50%" — от чего?','Один и тот же процент при разной базе это разные деньги. Переключайте режим.')+
+   '<div class="viz-body"><div class="seg" id="bs"><button class="on" data-m="p">В процентах</button><button data-m="a">В абсолютных значениях</button></div><div id="bc" style="margin-top:18px"></div></div>';
+   function render(mode){
+    var groups=[{n:'Мало данных: 2 → 3 заявления',v:[2,3],lab:mode==='p'?['2','3  ·  +50%']:['2','3  ·  +1'],h:[90,135]},
+                {n:'Много данных: 200 → 300 заявлений',v:[200,300],lab:mode==='p'?['200','300  ·  +50%']:['200','300  ·  +100'],h:[90,135]}];
+    var c=document.getElementById('bc'),h='<div style="display:flex;gap:60px;flex-wrap:wrap">';
+    groups.forEach(function(g){
+     h+='<div><div style="font-size:15px;font-weight:700;margin-bottom:8px">'+g.n+'</div><div class="bars" style="height:160px">';
+     g.v.forEach(function(v,i){
+      h+='<div class="bcol"><div class="bval">'+g.lab[i]+'</div><div class="bbar" style="height:'+g.h[i]+'px;background:'+(i?PAL.green:'#c3cddd')+'"></div><div class="blab">'+(i?'стало':'было')+'</div></div>';
+     });
+     h+='</div></div>';
+    });
+    h+='</div><div class="viz-panel" style="margin-top:16px">'+(mode==='p'
+     ?'<b>В процентах картинки одинаковые:</b> обе "+50%". <br>Если показать только процент, то разницы не видно вообще.'
+     :'<b>В абсолютах все меняется:</b> в первом случае выросли на 1 заявление, во втором на 100. <br>Одинаковый процент, но в сто раз разный эффект.')+'</div>';
+    c.innerHTML=h;
+   }
+   document.querySelectorAll('#bs button').forEach(function(b){
+    b.onclick=function(){
+     document.querySelectorAll('#bs button').forEach(function(x){x.classList.remove('on');});
+     b.classList.add('on');render(b.dataset.m);
+    };
+   });
+   render('p');
+  }},
+  {pos:2,build:function(el){
+   el.innerHTML=vizHead('📈',PAL.greenBg,'Мороженое и утонувшие','Классическая ловушка. Включайте и выключайте линии — и найдите третий фактор.')+
+   '<div class="viz-body"><div class="legend" style="margin-bottom:10px">'+
+   '<span class="li tog" data-s="a" role="button" tabindex="0"><span class="sw" style="background:'+PAL.green+'"></span>Мороженое</span>'+
+   '<span class="li tog" data-s="b" role="button" tabindex="0"><span class="sw" style="background:'+PAL.blue+'"></span>Утонувшие</span>'+
+   '<span class="li tog" data-s="c" role="button" tabindex="0"><span class="sw" style="background:'+PAL.red+'"></span>Жара (°C)</span></div>'+
+   '<svg id="csvg" width="620" height="240" viewBox="0 0 620 240" style="max-width:100%"></svg><div class="viz-panel" id="ccap" aria-live="polite" style="margin-top:12px"></div></div>';
+   var on={a:true,b:true,c:false};
+   var D={a:[3,5,8,12,15,18],b:[1,2,3,5,7,9],c:[10,14,20,26,32,38]};
+   var C={a:PAL.green,b:PAL.blue,c:PAL.red};
+   function norm(a){var mx=Math.max.apply(null,a),mn=Math.min.apply(null,a);return a.map(function(v){return 210-((v-mn)/(mx-mn))*180+10;});}
+   function draw(){
+    var h='<line x1="30" y1="220" x2="600" y2="220" stroke="#c9cedb" stroke-width="2"/>';
+    ['a','b','c'].forEach(function(k){
+     if(!on[k])return;
+     var pts=norm(D[k]).map(function(y,i){return (60+i*100)+','+y;}).join(' ');
+     h+='<polyline points="'+pts+'" fill="none" stroke="'+C[k]+'" stroke-width="3.5" stroke-linecap="round"/>';
+    });
+    document.getElementById('csvg').innerHTML=h;
+    var cap=document.getElementById('ccap');
+    if(on.c)cap.innerHTML='<b>Вот оно.</b> Жара коррелирует и с мороженым, и с купаниями и именно поэтому первые две линии растут вместе. <br>Убрав третий фактор, легко принять совпадение трендов за причину.';
+    else cap.innerHTML='<b>Две линии растут синхронно.</b> Запретить мороженое, чтобы спасти людей? <br>График "за", но не хватает одной линии, тогда включите жару.';
+   }
+   /* обводка легенды появляется только у включенной категории */
+   function syncLi(li){
+    var k=li.dataset.s;
+    li.setAttribute('aria-pressed',on[k]?'true':'false');
+    li.style.borderColor=on[k]?C[k]:'transparent';
+    li.style.opacity=on[k]?'1':'.6';
+   }
+   el.querySelectorAll('.legend .li.tog').forEach(function(li){
+    syncLi(li);
+    function toggle(){on[li.dataset.s]=!on[li.dataset.s];syncLi(li);draw();}
+    li.onclick=toggle;
+    li.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}};
+   });
+   draw();
+  }},
+ ],
+ 5:[
+  {pos:0,build:function(el){
+   el.innerHTML=vizHead('🗂️',PAL.blueBg,'Три формата аналитической работы','Отчет, дашборд и ad-hoc это разные продукты с разной ценой')+
+   '<div class="viz-body"><div class="role-grid" id="fg"></div><div class="viz-panel" id="fp" style="margin-top:14px"></div></div>';
+   var F=[
+    {n:'Отчет',c:PAL.blue,bg:PAL.blueBg,q:'"Что было по плану"',z:'<b>Регулярность:</b> раз в неделю/месяц, фиксированная форма.<br><b>Интерактив:</b> нет — PDF или таблица.<br><b>Срок создания:</b> дни, потом работает по расписанию.<br><b>Пример:</b> ежемесячный отчет по выданным разрешениям для руководства.'},
+    {n:'Дашборд',c:PAL.teal,bg:PAL.tealBg,q:'"Что происходит прямо сейчас"',z:'<b>Регулярность:</b> обновляется автоматически по расписанию обновлений.<br><b>Интерактив:</b> фильтры, детализация, дрилл-даун.<br><b>Срок создания:</b> недели, нужна витрина данных.<br><b>Пример:</b> панель по срокам и статусам заявлений для руководства.'},
+    {n:'Ad-hoc анализ',c:PAL.purple,bg:PAL.purpleBg,q:'"Ответь на один вопрос"',z:'<b>Регулярность:</b> разовый, вопрос закрыт — анализ архивируется.<br><b>Интерактив:</b> не нужен, важен вывод.<br><b>Срок создания:</b> часы–дни.<br><b>Пример:</b> "почему в апреле вырос средний срок согласования в Северном районе?"'}];
+   var fg=document.getElementById('fg'),fp=document.getElementById('fp');
+   F.forEach(function(r,i){
+    var d=kb(document.createElement('div'));d.className='role-card'+(i===0?' sel':'');
+    d.style.setProperty('--rc',r.c);d.style.setProperty('--rcBg',r.bg);
+    d.innerHTML='<div class="rc-name">'+r.n+'</div><div class="rc-q">'+r.q+'</div>';
+    d.onclick=function(){
+     fg.querySelectorAll('.role-card').forEach(function(x){x.classList.remove('sel');});
+     d.classList.add('sel');fp.innerHTML=r.z;
+    };
+    fg.appendChild(d);
+   });
+   fg.children[0].click();
+  }},
+  {pos:1,build:function(el){
+   el.innerHTML=vizHead('🔌',PAL.tealBg,'Откуда дашборд берет цифры','Дашборд — это витрина плюс визуализация. Переключите "сломать витрину" и посмотрите эффект.')+
+   '<div class="viz-body"><div class="pipe" style="align-items:center">'+
+   '<div class="pnode" style="min-width:140px"><div class="pn" style="color:'+PAL.purple+'">Витрина</div><div class="ps">gold-слой данных</div></div>'+
+   '<div class="parrow">→</div>'+
+   '<div class="pnode" style="min-width:140px"><div class="pn" style="color:'+PAL.blue+'">BI-инструмент</div><div class="ps">Power BI · Tableau · DataLens</div></div>'+
+   '<div class="parrow">→</div>'+
+   '<div class="pnode" style="min-width:160px" id="dashNode"><div class="pn" style="color:'+PAL.teal+'">Дашборд</div><div class="ps">руководитель смотрит цифры</div></div>'+
+   '</div><div style="margin-top:16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap"><label style="display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600;cursor:pointer"><input type="checkbox" id="brk" style="width:18px;height:18px;accent-color:'+PAL.red+'">Симуляция: витрина сломалась</label></div>'+
+   '<div class="viz-panel" id="bicp" style="margin-top:12px"><b>Все в порядке.</b> Витрина обновляется по расписанию, BI читает свежие данные, дашборд показывает актуальные цифры.</div></div>';
+   document.getElementById('brk').onchange=function(){
+    var on=this.checked,dn=document.getElementById('dashNode');
+    dn.style.borderColor=on?PAL.red:'var(--line)';
+    dn.style.background=on?PAL.redBg:'#fff';
+    document.getElementById('bicp').innerHTML=on
+     ?'<b>Красный режим.</b> Пайплайн не работает, значит витрина не обновляется. Теперь <b>все</b> дашборды компании показывают вчерашнее или ошибку. <br>Первый вопрос: "когда последний раз успешно обновлялась загрузка?" — это к дата-инженеру.'
+     :'<b>Все в порядке.</b> Витрина обновляется по расписанию, BI читает свежие данные, дашборд показывает актуальные цифры.';
+   };
+  }},
+  {pos:2,build:function(el){
+   el.innerHTML=vizHead('📈',PAL.greenBg,'Два лица одного графика','Одни и те же данные: число обработанных заявлений по месяцам, тыс. Переключайте шкалу, хоть цифры не меняются, впечатление меняется полностью.')+
+   '<div class="viz-body"><div class="seg" id="as"><button class="on" data-m="z">Ось с нуля</button><button data-m="t">Ось от 100</button></div><svg id="axsvg" width="640" height="280" viewBox="0 0 640 280" style="max-width:100%;margin-top:14px"></svg><div class="viz-panel" id="axcap" style="margin-top:10px"></div></div>';
+   var V=[100.5,101.2,102.8,103.5,104.9,106],M=['Янв','Фев','Мар','Апр','Май','Июн'];
+   function draw(mode){
+    var min=mode==='z'?0:100,mx=110,H=200,x0=50;
+    var y=function(v){return 240-((v-min)/(mx-min))*H;};
+    var pts=V.map(function(v,i){return (x0+i*105)+','+y(v);}).join(' ');
+    var h='';
+    for(var g=min;g<=mx;g+=(mode==='z'?25:2)){
+     h+='<line x1="'+x0+'" y1="'+y(g)+'" x2="610" y2="'+y(g)+'" stroke="#edf0f6" stroke-width="1.5"/><text x="'+(x0-8)+'" y="'+(y(g)+4)+'" text-anchor="end" font-size="11.5" fill="'+PAL.faint+'">'+String(g).replace('.',',')+'</text>';
+    }
+    V.forEach(function(v,i){
+     h+='<circle cx="'+(x0+i*105)+'" cy="'+y(v)+'" r="5.5" fill="'+PAL.teal+'"/>';
+     h+='<text x="'+(x0+i*105)+'" y="262" text-anchor="middle" font-size="12" fill="'+PAL.faint+'">'+M[i]+'</text>';
+     h+='<text x="'+(x0+i*105)+'" y="'+(y(v)-12)+'" text-anchor="middle" font-size="12.5" font-weight="700" fill="'+PAL.ink+'">'+String(v).replace('.',',')+'</text>';
+    });
+    h+='<polyline points="'+pts+'" fill="none" stroke="'+PAL.teal+'" stroke-width="3.5" stroke-linecap="round"/>';
+    document.getElementById('axsvg').innerHTML=h;
+    document.getElementById('axcap').innerHTML=mode==='z'
+     ?'<b>Честный взгляд:</b> с осью от нуля видно, что число заявлений стабильно. Фактический рост за полгода это всего <b>+5,5%</b>.'
+     :'<b>Усеченная ось от 100</b> превратила те же +5,5% в "бурный рост". Так график продает панику или эйфорию. <br>Правило: ось с нуля, единицы подписаны.';
+   }
+   document.querySelectorAll('#as button').forEach(function(b){
+    b.onclick=function(){
+     document.querySelectorAll('#as button').forEach(function(x){x.classList.remove('on');});
+     b.classList.add('on');draw(b.dataset.m);
+    };
+   });
+   draw('z');
+  }}
+ ],
+ 6:[
+  {pos:0,build:function(el){
+   el.innerHTML=vizHead('🎯',PAL.blueBg,'Матрица приоритетов задач','Ценность решения против срочности. Нажимайте на квадранты — там правила и примеры.')+
+   '<div class="viz-body" style="display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center"><div style="writing-mode:vertical-rl;transform:rotate(180deg);font-size:12.5px;color:var(--faint);font-weight:700;letter-spacing:.08em;text-transform:uppercase">Срочность ↑</div>'+
+   '<div><div class="mat2x2" id="mx">'+
+   '<div class="quad" data-q="1" style="--qc:'+PAL.green+';--qcBg:'+PAL.greenBg+'"><div class="qn">Срочно + ценно</div><div class="qd">Делать первым</div></div>'+
+   '<div class="quad" data-q="0" style="--qc:'+PAL.blue+';--qcBg:'+PAL.blueBg+'"><div class="qn">Не срочно + ценно</div><div class="qd">Запланировать</div></div>'+
+   '<div class="quad" data-q="3" style="--qc:'+PAL.amber+';--qcBg:'+PAL.amberBg+'"><div class="qn">Срочно + не ценно</div><div class="qd">Минимум усилий</div></div>'+
+   '<div class="quad" data-q="2" style="--qc:'+PAL.faint+';--qcBg:#f2f3f6"><div class="qn">Не срочно + не ценно</div><div class="qd">Отказать</div></div>'+
+   '</div><div style="text-align:center;font-size:12.5px;color:var(--faint);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:8px">Ценность для решения →</div></div></div>'+
+   '<div class="viz-panel" id="mxp" style="margin-top:14px">Нажмите на квадрант.</div>';
+   var R=[
+    '<b>Запланировать (ценно, не срочно).</b> Нормальная работа команды: витрина для нового отчета, рефакторинг метрики. Ставьте в бэклог с оценкой, не давите сроками.',
+    '<b>Делать первым (ценно + срочно).</b> Решение зависит от данных прямо сейчас: цифры к совещанию у руководителя, инцидент с данными. Выделяйте ресурс, убирайте другие задачи.',
+    '<b>Отказать (не ценно, не срочно).</b> Если за "интересно посмотреть" не стоит никакого решения, то вежливый отказ или архив. Такие задачи съедают до трети ресурса команды.',
+    '<b>Минимум усилий (срочно, не ценно).</b> "Нужна цифра для галочки". Дайте грубую оценку из готовой витрины за 15 минут, не стройте пайплайн.'];
+   el.querySelectorAll('.quad').forEach(function(q){kb(q);
+    q.onclick=function(){
+     el.querySelectorAll('.quad').forEach(function(x){x.classList.remove('sel');});
+     q.classList.add('sel');document.getElementById('mxp').innerHTML=R[+q.dataset.q];
+    };
+   });
+   el.querySelector('.quad').click();
+  }},
+  {pos:1,build:function(el){
+   el.innerHTML=vizHead('🧱',PAL.orangeBg,'Счетчик техдолга','Каждый "быстро поправим в Excel" это кирпичик. Добавляйте и смотрите, как растет риск.')+
+   '<div class="viz-body"><div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:6px"><button class="vbtn" id="addB">＋ Еще один Excel-костыль</button><button class="vbtn alt" id="fixB">Починить техдолг</button></div>'+
+   '<div class="bricks" id="bricks"></div>'+
+   '<div class="meter"><div class="meter-fill" id="debtFill"></div></div>'+
+   '<div class="viz-panel" id="debtCap" style="margin-top:12px"></div></div>';
+   var n=0;
+   function upd(){
+    var b=document.getElementById('bricks');b.innerHTML='';
+    for(var i=0;i<n;i++){
+     var d=document.createElement('div');d.className='brick';
+     d.style.setProperty('--rot',((i%3)-1)*4+'deg');d.textContent='Excel';
+     b.appendChild(d);
+    }
+    var risk=Math.min(100,n*13);
+    document.getElementById('debtFill').style.width=risk+'%';
+    var cap=document.getElementById('debtCap');
+    if(n===0)cap.innerHTML='<b>Чисто.</b> Все потоки автоматизированы, ручных правок нет. Так держать.';
+    else if(n<=2)cap.innerHTML='<b>Под контролем.</b> Пара ручных правок это еще нормально, но у каждой должен быть срок жизни: неделя, не месяц.';
+    else if(n<=5)cap.innerHTML='<b>Костыли копятся.</b> Каждый новый отчет собирается все дольше, люди боятся трогать файлы. Самое время завести задачу инженерам.';
+    else cap.innerHTML='<b>Инцидент неизбежен.</b> Кто-то перезапишет файл, формула сломается в отпуске единственного "знающего" человека и цифры для руководства не будет.';
+   }
+   document.getElementById('addB').onclick=function(){if(n<8){n++;upd();}};
+   document.getElementById('fixB').onclick=function(){n=0;upd();};
+   upd();
+  }}
+ ]
+};
+
+/* ================= home ================= */
+function nextTarget(){
+ for(var i=0;i<MODULES.length;i++){if(!state.done['m'+i])return 'm'+i;}
+ return 'check';
+}
+function renderHome(){
+ var n=doneCount(),totalXP=getXP(),maxXP=MODULES.reduce(function(a,m){return a+m.quiz.length*10+40+10;},0);
+ var target=n===N_MOD?'m0':nextTarget();
+ var h='<div class="crumb">Главная · курс для руководителей проектов</div>';
+ h+='<div class="hero"><div class="hero-kicker">Интерактивный курс</div>';
+ h+='<h1>Данные для руководителя проекта</h1>';
+ h+='<p class="lead">Короткий практический курс о том, как понимать команду данных, ставить задачи аналитику, дата-инженеру и не путаться в терминах. <br>Без программирования, на примерах из работы организации.</p>';
+ h+='<div class="hero-stats">';
+ h+='<div class="hero-stat"><b>'+N_MOD+'</b><span>модулей</span></div>';
+ h+='<div class="hero-stat"><b>'+hoursLabel()+'</b><span>в своем темпе</span></div>';
+ h+='<div class="hero-stat"><b>'+n+' / '+N_MOD+'</b><span>пройдено</span></div>';
+ h+='<div class="hero-stat"><b>'+totalXP+'</b><span>XP из '+maxXP+'</span></div>';
+ h+='</div>';
+ h+='<div class="hero-cta"><button class="pg-btn" id="startBtn">'+(n===0?'Начать курс →':(n===N_MOD?'Повторить материал →':'Продолжить: модуль '+(+target.slice(1)+1)+' →'))+'</button><span style="font-size:13.5px;color:var(--mut)">Прогресс сохраняется в браузере, можно проходить курс по частям.</span></div>';
+ h+='</div>';
+ h+='<h2 class="sec">С кем вы работаете</h2>';
+ h+='<div class="role-mini">';
+ h+='<div class="rm-card"><div class="rm-ico" style="background:'+PAL.blueBg+';color:'+PAL.blue+'">📊</div><b>Аналитик данных</b><p>Отвечает "что происходит и почему": метрики, отчеты, разовые разборы.</p></div>';
+ h+='<div class="rm-card"><div class="rm-ico" style="background:'+PAL.greenBg+';color:'+PAL.green+'">⚙️</div><b>Дата-инженер</b><p>Следит, чтобы данные были, приходили вовремя и были правильными.</p></div>';
+ h+='<div class="rm-card"><div class="rm-ico" style="background:'+PAL.purpleBg+';color:'+PAL.purple+'">📚</div><b>Владелец данных</b><p>Отвечает за полноту, актуальность и понятность данных: кто их вносит и что означает каждое поле.</p></div>';
+ h+='</div>';
+ h+='<h2 class="sec">Модули курса</h2>';
+ h+='<div class="mod-grid">';
+ MODULES.forEach(function(m,i){
+  var st=quizStats(i),done=state.done['m'+i],frac=st.total?Math.round((st.ok/st.total)*100):0;
+  var stateLbl=done?'Пройден':(st.ok+st.wrong>0?'В процессе':'Не начат');
+  var stateBg=done?PAL.greenBg:(st.ok+st.wrong>0?PAL.amberBg:'var(--soft)');
+  var stateCol=done?PAL.green:(st.ok+st.wrong>0?PAL.amber:'var(--faint)');
+  h+='<button class="mod-card" data-k="m'+i+'"><div class="mc-top"><div class="mc-num" style="background:'+HUESBG[i]+';color:'+HUES[i]+'">'+m.num+'</div><span class="mc-state" style="background:'+stateBg+';color:'+stateCol+'">'+stateLbl+'</span></div>';
+  h+='<div class="mc-title">'+MICO[i]+' '+m.short+'</div><div class="mc-sub">'+m.dur+' · '+m.quiz.length+' вопроса</div>';
+  h+='<div class="mc-bar"><i style="width:'+frac+'%;background:'+HUES[i]+'"></i></div></button>';
+ });
+ h+='</div>';
+ h+='<div class="badge-row" style="margin-top:26px">';
+ MODULES.forEach(function(m,i){
+  var on=state.done['m'+i];
+  h+='<span class="badge'+(on?' on':'')+'" style="'+(on?'background:'+HUESBG[i]+';color:'+HUES[i]:'')+'" title="'+m.short+'">'+MICO[i]+'</span>';
+ });
+ h+='</div><div class="streak-note">Бейдж открывается, когда вы верно отвечаете на все вопросы модуля.</div>';
+ main.innerHTML=h;
+ document.getElementById('startBtn').onclick=function(){current=target;buildNav();render();};
+ main.querySelectorAll('.mod-card').forEach(function(b){b.onclick=function(){current=b.dataset.k;buildNav();render();};});
+}
+/* ================= certificate ================= */
+function renderCert(){
+ var n=doneCount(),complete=n===N_MOD;
+ var h='<div class="crumb">Выпускной документ</div><h1 class="cert-intro">Сертификат о прохождении курса</h1><div class="cert-wrap">';
+ if(!complete){
+  h+='<p class="cert-intro" style="color:var(--mut);font-size:16.5px;margin-top:10px;max-width:640px">Сертификат открывается после успешного прохождения всех '+N_MOD+' модулей. Сейчас пройдено <b>'+n+' из '+N_MOD+'</b>. Осталось совсем немного!</p>';
+  h+='<div class="prog-bar cert-intro" style="max-width:420px;margin-top:14px"><div class="prog-fill" style="width:'+(n/N_MOD*100)+'%"></div></div>';
+ }else{
+  h+='<p class="cert-intro" style="color:var(--mut);font-size:16.5px;margin-top:10px;max-width:640px">Поздравляем — все модули пройдены! Впишите имя и распечатайте или сохраните сертификат в PDF (через печать браузера).</p>';
+ }
+ h+='<div class="cert-formrow" style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;align-items:center">';
+ h+='<input class="cert-input" id="certName" placeholder="Фамилия Имя" value="'+(state.certName||'').replace(/"/g,'&quot;')+'">';
+ if(complete)h+='<button class="pg-btn ghost" id="printBtn">🖨 Распечатать / сохранить PDF</button>';
+ h+='</div>';
+ h+='<div class="cert'+(complete?' pop':'')+'" style="'+(complete?'':'filter:grayscale(.75);opacity:.55')+'">';
+ h+='<div class="cert-kicker">Сертификат о прохождении курса</div>';
+ h+='<div style="font-size:19px;font-weight:700;margin-top:14px">"Данные для руководителя проекта"</div>';
+ h+='<div class="cert-name" id="certNameOut">'+((state.certName||'').trim()||'Ваше имя')+'</div>';
+ h+='<div class="cert-sub">успешно прошел(-ла) курс о работе с данными: роли команды, устройство данных, SQL без кода, метрики и статистика, отчетность и дашборды, процессы работы с командой.</div>';
+ h+='<div class="cert-foot">'+new Date().toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'})+' · '+getXP()+' XP · '+N_MOD+' из '+N_MOD+' модулей</div>';
+ h+='</div></div>';
+ var idx=ORDER.indexOf('cert');
+ h+='<div class="pager"><button class="pg-btn ghost" id="pgPrev">← '+pageName(ORDER[idx-1])+'</button><span></span></div>';
+ main.innerHTML=h;
+ var nameInput=document.getElementById('certName');
+ nameInput.oninput=function(){state.certName=this.value;save();document.getElementById('certNameOut').textContent=this.value.trim()||'Ваше имя';};
+ var pb=document.getElementById('printBtn');if(pb)pb.onclick=function(){window.print();};
+ document.getElementById('pgPrev').onclick=function(){current=ORDER[idx-1];buildNav();render();};
+}
+
+/* ================= render root ================= */
+function render(){
+ if(current==='home')renderHome();
+ else if(current==='gloss')renderGlossary();
+ else if(current==='check')renderChecklist();
+ else if(current==='cert')renderCert();
+ else renderModule(+current.slice(1));
+ window.scrollTo(0,0);
+ main.focus({preventScroll:true});
+ main.classList.remove('fadein');void main.offsetWidth;main.classList.add('fadein');
+}
+document.getElementById('resetLink').onclick=function(e){
+ e.preventDefault();
+ if(confirm('Сбросить весь прогресс курса?')){
+  state={done:{},quiz:{},check:{},practice:{},certName:''};save();current='home';buildNav();updateProgress();render();
+ }
+};
+buildNav();updateProgress();render();
+</script>
+</body>
+</html>
